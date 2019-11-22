@@ -24,7 +24,7 @@ public class MainGame_setstatus_p2_page extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                MainGame_page temp = new MainGame_page();
+                MainGamePage temp = new MainGamePage();
                 temp.setVisible(true);
                 dispose();
             }

@@ -7,7 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 /** 전투시 주사위를 굴릴수 있는 프레임이다*/
-public class Dice_page extends JFrame {
+public class DicePage extends JFrame {
 
 	private JPanel contentPane;
 
@@ -15,7 +15,7 @@ public class Dice_page extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Dice_page frame = new Dice_page();
+					DicePage frame = new DicePage();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -25,7 +25,7 @@ public class Dice_page extends JFrame {
 	}
 
 
-	public Dice_page() {
+	public DicePage() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 380, 320);
 		contentPane = new JPanel();

@@ -15,8 +15,6 @@ import javax.swing.JTextPane;
 /** 게임을 진행하면서 바뀌는 플레이어의 현재 스테이터스와 아이템을 보여주는 페이지이다.*/
 
 public class MainGame_setstatus_p1_page extends JFrame {
-	ImagePanel panel = new ImagePanel();
-	Image img = new ImageIcon("C:/Users/182899/eclipse-workspace/ORG/src/imgaes/backgroundImage.jpg").getImage();
 
 	MainGame_setstatus_p1_page() {
 		getContentPane().setLayout(null);
@@ -29,7 +27,7 @@ public class MainGame_setstatus_p1_page extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				MainGame_page temp = new MainGame_page();
+				MainGamePage temp = new MainGamePage();
 				temp.setVisible(true);
 				dispose();
 			}
@@ -136,13 +134,6 @@ public class MainGame_setstatus_p1_page extends JFrame {
 
 	}
 
-	class ImagePanel extends JPanel {
-
-		public void paintComponent(Graphics g) {
-			super.paintComponent(g);
-			g.drawImage(img, 0, 0, 1200, 960, this);
-		}
-	}
 
 	public static void main(String[] args) {
 

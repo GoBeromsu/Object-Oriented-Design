@@ -10,11 +10,11 @@ import javax.swing.*;
 /**
  * Dialog 창, map. 플레이어들의 간략화 된 스탯 및 token을 보여주는 클래스이다.
  */
-public class MainGame_page extends JFrame {
+public class MainGamePage extends JFrame {
     Image img = new ImageIcon("C:/Users/182899/eclipse-workspace/OrientedPG/src/images/backgroundImage.jpg").getImage();
 
 
-    public MainGame_page() {
+    public MainGamePage() {
         setBounds(100, 100, 1200, 960);
         getContentPane().setLayout(null);
 
@@ -245,7 +245,7 @@ public class MainGame_page extends JFrame {
     }
 
     public static void main(String[] args) {
-        MainGame_page MainGame = new MainGame_page();
+        MainGamePage MainGame = new MainGamePage();
         MainGame.setVisible(true);
     }
 

@@ -9,11 +9,11 @@ import javax.swing.*;
 /**
  * 새로 게임을 생성할 때 보스를 설정하는 페이지이다.
  */
-public class SetBoss_page extends JFrame {
+public class SetBossPage extends JFrame {
     ImagePanel panel = new ImagePanel();
     Image img = new ImageIcon("C:/Users/182899/eclipse-workspace/OrientedPG/src/images/backgroundImage.jpg").getImage();
 
-    SetBoss_page() {
+    SetBossPage() {
 
         setBounds(0, 0, 1200, 960);
         getContentPane().setLayout(null);
@@ -29,7 +29,7 @@ public class SetBoss_page extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                SetStatus_page next = new SetStatus_page();
+                SetStatusPage next = new SetStatusPage();
                 next.setVisible(true);
                 dispose();
             }
@@ -39,7 +39,7 @@ public class SetBoss_page extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                Start_page prev = new Start_page();
+                StartPage prev = new StartPage();
                 prev.setVisible(true);
                 dispose();
             }
@@ -86,7 +86,7 @@ public class SetBoss_page extends JFrame {
 
     public static void main(String[] args) {
 
-        SetBoss_page frame = new SetBoss_page();
+        SetBossPage frame = new SetBossPage();
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }

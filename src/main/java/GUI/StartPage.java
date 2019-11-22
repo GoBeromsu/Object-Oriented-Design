@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 
 
 /** New Game Load Game EXIT 3개의 버튼으로 게임 시작 및 종료를 담당하는 페이지이다.*/
-public class Start_page extends JFrame {
+public class StartPage extends JFrame {
 	ImagePanel panel = new ImagePanel();
 	Image img = new ImageIcon("C:\\Users\\182899\\Documents\\GitHub\\Object-Oriented-Design\\Object-Oriented-Design\\src\\main\\java\\GUI\\imgaes\\main_title.png").getImage();
 	
@@ -20,7 +20,7 @@ public class Start_page extends JFrame {
 	JButton loadgame = new JButton(new ImageIcon("C:\\Users\\182899\\Documents\\GitHub\\Object-Oriented-Design\\Object-Oriented-Design\\src\\main\\java\\GUI\\imgaes\\Loadgame.png"));
 	JButton exitgame = new JButton(new ImageIcon("C:\\Users\\182899\\Documents\\GitHub\\Object-Oriented-Design\\Object-Oriented-Design\\src\\main\\java\\GUI\\imgaes\\EXIT.png"));
 
-	Start_page() {
+	StartPage() {
 		getContentPane().add(panel);
 		panel.setLayout(null);
 		setBounds(0, 0, 1200, 960);
@@ -29,7 +29,7 @@ public class Start_page extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				
-				SetBoss_page test = new SetBoss_page();
+				SetBossPage test = new SetBossPage();
 				test.setVisible(true);
 				dispose();
 			}
@@ -68,7 +68,7 @@ public class Start_page extends JFrame {
 
 	public static void main(String[] args) {
 
-		Start_page frame = new Start_page();
+		StartPage frame = new StartPage();
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
