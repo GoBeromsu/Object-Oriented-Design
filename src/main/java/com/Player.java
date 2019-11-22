@@ -4,7 +4,6 @@ import lombok.*;
 
 import java.util.ArrayList;
 
-import static com.Validator.isValidForProperty;
 
 
 /**
@@ -15,28 +14,25 @@ import static com.Validator.isValidForProperty;
 @Data
 @Builder
 public class Player{
+    static private int idx_of_cur_player = 0;
+    static private final int MAXIMUM_NUM_OF_PLAYERS = 2;
+    static Player[] players = new Player[MAXIMUM_NUM_OF_PLAYERS];
 
-    @Builder.Default
-    private TileType pos = null;
-    @Builder.Default
-    private int money=1000;
-
+    private TileType pos;
+    private int money;
+    private int energy;
     private int power;
     private int health;
     private int mental;
     private int dexterity;
     private int intelligence;
     private String characteristics;
-    @Builder.Default
-    private ArrayList<Item> items = new ArrayList<>();
+    private ArrayList<Item> items;
 
-    // TODO : 이 메소드를 GameMaster로 옮기는게 한 객체가 하나의 역할만 하는 방법일 것 같다.
-    public TileType moveTo(TileType here) {
-        pos = here;
-        return pos;
+    public void decreaseEnergy() {
+        energy--;
     }
-
-    public boolean hasItem(Item item) {
-        return true;
+    static public Player getCurrentPlayer(){
+        return players[idx_of_cur_player];
     }
 }

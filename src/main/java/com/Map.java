@@ -1,9 +1,7 @@
 package com;
 
-import lombok.Builder;
-import lombok.Data;
 
-import java.util.ArrayList;
+import static com.GameMaster.*;
 
 /**
  * 맵 객체 모델로, 맵의 부분 개념인 타일을 보다 쉽게 접근하는데 사용된다.(일종의 핸들러)
@@ -11,45 +9,43 @@ import java.util.ArrayList;
  * @author Se-Ok Jeon
  * @version 1.0
  */
-@Data
-public final class Map {
-
-    static final private Map map = new Map();
-    static private ArrayList<Tile> tiles; // tiles의 인덱스 == TileType의 인덱스 : 각 타일 접근성 향상을 위해
-
-    private Map(){
-        tiles = new ArrayList<>(){};
-        for( TileType tile : TileType.values() ){
-            tiles.add(
-                    Tile
-                    .builder()
-                    .name(tile.getName())
-                    .build()
-            );
-        }
+public class Map {
+    static Tile[] tiles; // tiles의 인덱스 == TileType의 인덱스 : 각 타일 접근성 향상을 위해
+    static private int[][] path_validating_data={
+            {2,1,1,1,1,1,1,0,0,0,0,0,0},
+            {1,2,1,0,0,0,1,1,1,0,0,0,0},
+            {1,1,2,1,0,0,0,0,1,1,0,0,0},
+            {1,0,1,2,1,0,0,0,0,1,1,0,0},
+            {1,0,0,1,2,1,0,0,0,0,1,1,0},
+            {1,0,0,0,1,2,1,0,0,0,0,1,1},
+            {1,1,0,0,0,1,2,1,0,0,0,0,1},
+            {0,1,0,0,0,0,1,0,0,0,0,0,0},
+            {0,1,1,0,0,0,0,0,0,0,0,0,0},
+            {0,0,1,1,0,0,0,0,0,0,0,0,0},
+            {0,0,0,1,1,0,0,0,0,0,0,0,0},
+            {0,0,0,0,1,1,0,0,0,0,0,0,0},
+            {0,0,0,0,0,1,1,0,0,0,0,0,0}
+    };
+    /**
+     * 플레이어와 이동하고 싶은 장소를 받아 해당 장소로의 이동가능 여부를 확인하는 메소드
+     *
+     * @return boolean 이동가능 여부
+     */
+    public static boolean pathValid(Player player, TileType where)
+    {
+        TileType cur_pos = Player.getCurrentPlayer().getPos();
+        return path_validating_data[cur_pos.ordinal()][where.ordinal()] == 1;
     }
 
-    public static Map getInstance(){
-        return map;
+    public static Monster getMonsterAt(TileType pos) {
+        return tiles[pos.ordinal()].getSummoned_monster();
     }
 
-    public static ArrayList<Monster> getMonstersAt(TileType pos) {
-        Tile tile = tiles.get(pos.ordinal());
-        return tile.getSummoned_monsters();
+    public static boolean getPortalAt(TileType pos) {
+        return tiles[pos.ordinal()].isSummoned_portal();
     }
 
-    public ArrayList<Tile> getTiles() {
-        return tiles;
-    }
-
-    public void addMonstersAt(TileType pos, Monster monster) {
-        ArrayList<Monster> monsters = tiles.get(pos.ordinal()).getSummoned_monsters();
-        monsters.add(monster);
-        setMonstersAt(pos, monsters);
-    }
-
-    public void setMonstersAt(TileType pos, ArrayList<Monster> monsters) {
-        Tile tile = tiles.get(pos.ordinal());
-        tile.setSummoned_monsters(monsters);
+    public static void setMonsterAt(TileType pos, Monster monster) {
+        tiles[pos.ordinal()].setSummoned_monster(monster);
     }
 }

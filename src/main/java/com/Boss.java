@@ -1,8 +1,6 @@
 package com;
 import lombok.*;
 
-import static com.Validator.isValidForProperty;
-
 /**
  * 보스 객체의 모델
  * @author Se-Ok Jeon
@@ -11,7 +9,7 @@ import static com.Validator.isValidForProperty;
 @Data
 @Builder
 public class Boss {
-
+    static private Boss current_boss;
     public enum BossType {
         AZATHOTH("아자투스"),
         CHUTHULU("크툴루"),
@@ -25,7 +23,7 @@ public class Boss {
             return name;
         }
     }
-    private BossType name;
+    private BossType type;
     private int health;
     private int power;
 }
