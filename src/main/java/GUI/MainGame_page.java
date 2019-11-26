@@ -15,14 +15,16 @@ import javax.swing.*;
  */
 public class MainGame_page extends JFrame {
     Image img = new ImageIcon("src/images/backgroundImage.jpg").getImage();
-    /*
-        TODO : 각 타일 위에 출력할 수 있어야 하는 목록
-        플레이어 2명, 포탈 1개, 몬스터 1마리
-        1. 타일을 키우고, 플레이어 simple stat을 줄여서, 타일을 키운다.
-        2. 타일을 4분할
-        3. 상점과 같은 이벤트가 원래 있는 타일은 디폴트 배경 색을 다르게 한다.
-     */
+
+
+    public static void main(String[] args) {
+        MainGame_page MainGame = new MainGame_page();
+        MainGame.setVisible(true);
+    }
+
     public MainGame_page() {
+
+
         setBounds(100, 100, 1200, 960);
         getContentPane().setLayout(null);
 
@@ -70,6 +72,10 @@ public class MainGame_page extends JFrame {
         getContentPane().add(dialog_panel);
         dialog_panel.setLayout(null);
         {
+            JLabel test = new JLabel(new ImageIcon("C:\\Last\\Object-Oriented-Design\\src\\main\\java\\GUI\\imgaes\\azatoth.png"));
+            getContentPane().add(test);
+            test.setBounds(244, 445, 105, 54);
+
             JButton city_btn_0 = new JButton(new ImageIcon("src\\main\\java\\GUI\\imgaes\\stage.png"));
             city_btn_0.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -219,13 +225,13 @@ public class MainGame_page extends JFrame {
             getContentPane().add(city_btn_12);
         }
 
-		JLabel player1_img = new JLabel(new ImageIcon("src\\main\\java\\GUI\\imgaes\\player.png"));
-		player1_img.setBounds(650, 620, 240, 163);
-		getContentPane().add(player1_img);
+        JLabel player1_img = new JLabel(new ImageIcon("src\\main\\java\\GUI\\imgaes\\player.png"));
+        player1_img.setBounds(650, 620, 240, 163);
+        getContentPane().add(player1_img);
 
-		JLabel player1_name = new JLabel(new ImageIcon("src\\main\\java\\GUI\\imgaes\\player_name.png"));
-		player1_name.setBounds(650, 780, 240, 61);
-		getContentPane().add(player1_name);
+        JLabel player1_name = new JLabel(new ImageIcon("src\\main\\java\\GUI\\imgaes\\player_name.png"));
+        player1_name.setBounds(650, 780, 240, 61);
+        getContentPane().add(player1_name);
 
         p_simplestat player1 = new p_simplestat();
         JPanel player1_temp = new JPanel();
@@ -233,13 +239,13 @@ public class MainGame_page extends JFrame {
         getContentPane().add(player1_temp);
         player1_temp.add(player1);
 
-		JLabel player2_img = new JLabel(new ImageIcon("src\\main\\java\\GUI\\imgaes\\player.png"));
-		player2_img.setBounds(41, 620, 240, 163);
-		getContentPane().add(player2_img);
+        JLabel player2_img = new JLabel(new ImageIcon("src\\main\\java\\GUI\\imgaes\\player.png"));
+        player2_img.setBounds(41, 620, 240, 163);
+        getContentPane().add(player2_img);
 
-		JLabel player2_name = new JLabel(new ImageIcon("src\\main\\java\\GUI\\imgaes\\player_name.png"));
-		player2_name.setBounds(41, 780, 240, 61);
-		getContentPane().add(player2_name);
+        JLabel player2_name = new JLabel(new ImageIcon("src\\main\\java\\GUI\\imgaes\\player_name.png"));
+        player2_name.setBounds(41, 780, 240, 61);
+        getContentPane().add(player2_name);
 
         p_simplestat player2 = new p_simplestat();
         JPanel player2_temp = new JPanel();
@@ -248,13 +254,8 @@ public class MainGame_page extends JFrame {
         player2_temp.add(player2);
 
 
-
     }
 
-    public static void main(String[] args) {
-        MainGame_page MainGame = new MainGame_page();
-        MainGame.setVisible(true);
-    }
 
     class p_simplestat extends JPanel {
 
@@ -314,9 +315,9 @@ public class MainGame_page extends JFrame {
             energy_panel.add(energy_text);
             add(energy_panel);
 
-			money_panel.add(money);
-			money_panel.add(money_text);
-			add(money_panel);
+            money_panel.add(money);
+            money_panel.add(money_text);
+            add(money_panel);
 
             setLayout(new GridLayout(4, 2, 20, 0));
         }
