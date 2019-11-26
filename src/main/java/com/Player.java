@@ -32,6 +32,8 @@ public class Player{
     private String characteristics;
     private ArrayList<ItemType> items;
 
+
+
     public void decreaseEnergy() {
         energy--;
     }
