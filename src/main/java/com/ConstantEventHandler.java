@@ -168,6 +168,7 @@ public class ConstantEventHandler
 
     void CreateMonster(MonsterType monster, TileType tile)
     {
+    	Map.tiles[tile.ordinal()].setSummoned_monster(monster);
     }
 
 }
