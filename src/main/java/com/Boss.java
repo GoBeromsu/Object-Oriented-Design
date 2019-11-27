@@ -13,4 +13,5 @@ public class Boss {
     private BossType type;
     private int health;
     private int power;
+    private int requireVal;
 }

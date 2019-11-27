@@ -141,7 +141,7 @@ public class ConstantEventHandler
         if(isAffordable(player, item)==true)
         return player.getMoney()-item.getPrice();
     }
-    void sellItem(Player player, ItemType item)//우리 아이템 파는 것도 있었나..?있다면 상점 도착했을때 판다, 산다 선택하는 것도 있어야할듯
+    void sellItem(Player player, ItemType item)
     {
         ArrayList<ItemType> tempitems=player.getItems();
         for(int i=0;i<tempitems.size();i++)
@@ -154,10 +154,7 @@ public class ConstantEventHandler
         player.setItems(tempitems);
         player.setMoney(player.getMoney()+item.getPrice());
     }
-    ItemType getItem(ItemType item)//이건 어디에 쓰는거야?
-    {
-        return null;
-    }
+
     ItemType[] getRandomItemList()
     {
         ArrayList<ItemType> tempitemlist;
@@ -169,8 +166,9 @@ public class ConstantEventHandler
         return tempitemlist;
     }
 
-    void CreateMonster(MonsterType monster, TileType tile)//타일 타입으로 타일에 어떻게 몬스터를 추가하지? 타일과 타일타입 연관관계를 잘 모르겠네
+    void CreateMonster(MonsterType monster, TileType tile)
     {
+    	Map.tiles[tile.ordinal()].setSummoned_monster(monster);
     }
 
 }
