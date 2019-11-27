@@ -60,7 +60,7 @@ public class GameMaster {
         current_boss = selected_boss;
     }
     public static boolean hasItem(ItemType item) {
-        return true;
+        return getCurrentPlayer().getItems().indexOf(item)==-1? true:false;
     }
     public static boolean checkEnergy(Player player){return true;}
     public static void setInitializePlayerStats(int[] combined_stats){
