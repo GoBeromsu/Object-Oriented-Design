@@ -101,11 +101,11 @@ public class SetBoss_page extends JFrame {
                 public void actionPerformed(ActionEvent e) {
                     GameMaster.setBoss(
                             Boss
-                                .builder()
-                                .type(bosstype)
-                                .health(100)
-                                .power(100)
-                                .build()
+                                    .builder()
+                                    .type(bosstype)
+                                    .health(100)
+                                    .power(100)
+                                    .build()
                     );
                     SetStatus_page next = new SetStatus_page();
                     next.setVisible(true);

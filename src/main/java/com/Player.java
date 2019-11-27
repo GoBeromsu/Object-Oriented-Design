@@ -19,14 +19,20 @@ public class Player{
     static Player[] players = new Player[MAXIMUM_NUM_OF_PLAYERS];
 
     private TileType pos;
-    private int money ;
+    private int money;
     private int energy;
+<<<<<<< HEAD
     @Builder.Default
     private Integer power = null;
     @Builder.Default
     private int health = 1;
     @Builder.Default
     private int mental = 1;
+=======
+    private int power;
+    private int health;
+    private int mental;
+>>>>>>> parent of c1b8d23... Update SetStatus_page to interact with model data
     private int dexterity;
     private int intelligence;
     private String characteristics;
@@ -40,8 +46,11 @@ public class Player{
     static public Player getCurrentPlayer(){
         return players[idx_of_cur_player];
     }
+<<<<<<< HEAD
     static public Player getPlayer(int idx){return players[idx];}
     static public void toggleCurrentPlayer(){
         idx_of_cur_player = idx_of_cur_player == 1 ? 0: 1;
     }
+=======
+>>>>>>> parent of c1b8d23... Update SetStatus_page to interact with model data
 }
