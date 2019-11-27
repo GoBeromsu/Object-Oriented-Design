@@ -25,7 +25,6 @@ public enum ItemType {
     HANZOSWORD("핫토리한조의 검",2,2,0,0,0,5),
     M16("M16",3,0,0,0,0,3);
     private int p_power;
-        this.p_int = p_int;
         this.p_mental = p_mental;
         this.price = price;
     }
