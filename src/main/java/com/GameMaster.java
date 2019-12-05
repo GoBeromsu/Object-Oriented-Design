@@ -1,12 +1,8 @@
 package com;
 
-import GUI.Fight_monster_page;
 import GUI.Start_page;
-import GUI.View;
-import GUI.music.Mainmusic_thread;
-import GUI.music.bossfightmusic_thread;
-import GUI.music.monsterfightmusic_thread;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -19,23 +15,13 @@ import static com.Player.*;
  * @version 1.0
  */
 public class GameMaster {
-
-    static private final int GAME_WIN = 0;
-    static private final int GAME_LOST = 1;
-    static private final int GAME_KEEPGOING = 2;
-    static private final int PLAYER_HEALTH_DEATH = 3;
-    static private final int PLAYER_MENTAL_DEATH = 4;
-    static private final int PLAYER_BOSS_DEATH = 5;
-
     public static int token = 0;
     public static int death_count = 3;
     public static int revive_count = 0;
     public static int turn = 1;
     public static Boss current_boss;
 
-    private ConstantEventHandler constant_event_handler;
-
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Start_page.Start_pageView();
     }
 
@@ -58,10 +44,6 @@ public class GameMaster {
         initMonsters();
     }
 
-    private static void initItem() {
-//        Player.items
-    }
-
     private static void initMap() {
 
         Map.tiles = new Tile[13];
@@ -81,14 +63,6 @@ public class GameMaster {
 
     public static void setBoss(Boss selected_boss) {
         current_boss = selected_boss;
-    }
-
-    public static boolean hasItem(ItemType item) {
-        return getCurrentPlayer().getItems().indexOf(item) == -1 ? true : false;
-    }
-
-    public static boolean isEnergyLeft(Player player) {
-        return getCurrentPlayer().getEnergy() == 0 ? true : false;
     }
 
     public static void setInitializePlayerStats(int[] combined_stats) {
@@ -118,7 +92,7 @@ public class GameMaster {
         player.setStatus(1);
         if (player.getMental() <= 0) {
             player.setMental(1);
-            player.setPos(TileType.MENTAL_HOSTPITAL);
+            player.setPos(TileType.MENTAL_HOSPITAL);
         }
         if (player.getHealth() <= 0) {
             player.setHealth(1);
@@ -137,9 +111,19 @@ public class GameMaster {
     }
 
     public static boolean check_num_of_token_for_win() {
-        if (token == 10)
-            return true;
-        else return false;
+            if(GameMaster.current_boss.getType()==BossType.NYARLATHOTEP)
+            {
+                if(token==13)
+                    return true;
+                else return false;
+            }
+            else if(token==10)
+            {
+                return true;
+            }
+            else
+                return false;
+
     }
 
     public static boolean check_player_status_for_lost() {
@@ -149,8 +133,6 @@ public class GameMaster {
     }
 
     public static boolean check_num_of_monsters_portals_for_boss() {
-        // 포털, 몬스터 생성 테스트 코드
-//        return false;
         int tempNum = 0;
         int tempNum2 = 0;
 
@@ -173,10 +155,11 @@ public class GameMaster {
             int tempNum1 = (int) Math.floor(Math.random() * 13);
             int tempNum2 = (int) Math.floor(Math.random() * 5);
             if (isTherePlayer(Map.tiles[tempNum1])) continue;
+            if(TileType.HOSPITAL.ordinal() == tempNum1 || TileType.MENTAL_HOSPITAL.ordinal() == tempNum1) continue;
 
             MonsterType monster = MonsterType.values()[tempNum2];
             Monster tempMon = new Monster(monster);
-            if (Map.tiles[tempNum1].getSummoned_monster() == null) {
+            if (Map.tiles[tempNum1].getSummoned_monster() == null&&Map.tiles[tempNum1].isSummoned_portal()==false) {
                 Map.tiles[tempNum1].setSummoned_monster(tempMon);
                 MainGamePageController.show_monsters();
 
@@ -185,7 +168,7 @@ public class GameMaster {
         }
         while (true) {
             int tempNum1 = (int) Math.floor(Math.random() * 13);
-            if (isTherePlayer(Map.tiles[tempNum1])) continue;
+            if (isTherePlayer(Map.tiles[tempNum1])||Map.tiles[tempNum1].getSummoned_monster()!=null) continue;
             if (Map.tiles[tempNum1].isSummoned_portal() == false) {
                 Map.tiles[tempNum1].setSummoned_portal(true);
                 break;
@@ -201,62 +184,4 @@ public class GameMaster {
         return false;
     }
 
-//    public static void test_addmonster_alltile() {
-//        MonsterType monster = MonsterType.values()[2];
-//        Monster tempmonster = new Monster(monster.getName(), monster.getInitial_health(), monster.getInitial_requireVal(), monster.getInitial_damage(), monster.getInitial_damageType(), monster.getInitial_monster_result(), monster.getInintial_imgpath());
-//
-//        for(int i =0 ; i<13;i++){
-//            Map.tiles[i].setSummoned_monster((tempmonster));
-//        }
-//    }
-
-//    public static void monster_fightcondition() {
-////        GameMaster.test_addmonster_alltile();
-//        Player player = getCurrentPlayer();
-//        if (Map.getMonsterAt(getCurrentPlayer().getPos())!= null) {
-//            Fight_monster_page monsterpage = new Fight_monster_page();
-//            monsterpage.setVisible(true);
-//        }
-
-//    }
-
-    public static void generateBossFight(Boss boss) {
-        throw new RuntimeException("generateBossFight() method does not implemented");
-    }
-//    public static void changemusic(int selectmusic){
-//
-//
-//        Thread currentmusic = Thread.currentThread();
-//        ThreadGroup threadGroup = currentmusic.getThreadGroup();
-//        while (threadGroup.getParent() != null) {
-//            threadGroup = threadGroup.getParent();
-//        }
-//        int activeCount = threadGroup.activeCount();
-//
-//        Thread[] activeThreads = new Thread[activeCount + 2];
-//        int enumeratedCount = threadGroup.enumerate(activeThreads);
-//        Thread finalizerThread = null;
-//        for (int i = 0; i < enumeratedCount; i++) {
-//            if (activeThreads[i].getName().equals("musicthread")) {
-//                finalizerThread = activeThreads[i];
-//                finalizerThread.isInterrupted();
-//                break;
-//            }
-//        }
-//
-//        if(selectmusic == 0){
-//            Thread newmusic = new monsterfightmusic_thread();
-//            newmusic.start();
-//        }
-//        else if(selectmusic == 1){
-//            Thread newmusic = new bossfightmusic_thread();
-//            newmusic.start();
-//        }
-//        else{
-//            Thread newmusic = new Mainmusic_thread();
-//            newmusic.start();
-//        }
-//
-//
-//    }
 }

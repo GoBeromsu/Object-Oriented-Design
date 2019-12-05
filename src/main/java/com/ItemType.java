@@ -1,8 +1,5 @@
 package com;
 
-import lombok.Builder;
-import lombok.Data;
-
 /**
  * 아이템 객체 모델
  *

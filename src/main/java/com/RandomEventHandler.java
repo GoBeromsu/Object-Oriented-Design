@@ -21,7 +21,7 @@ public class RandomEventHandler
 
     static public void RandomEventIndicator(Player player, int event_num)
     {
-        // TODO : RandomEvent 처리 이후, 플레이어의 스테이터스가 변했을 때, 변경을 탐지하고, 이를 화면에 뿌려주는 작업이 필요함.
+
         switch(event_num)
         {
             case 0:

@@ -1,109 +1,123 @@
 package GUI;
 
-import GUI.music.Mainmusic_thread;
 import com.GameMaster;
 import com.MainGamePageController;
 import com.Player;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Image;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
-import javax.print.DocFlavor;
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-//import static com.GameMaster.changemusic;
 
 /**
  * 각각의 플레이어들의 초기 스탯 분배하는 페이지이다.
  */
 public class SetStatus_page extends JFrame {
-    ImagePanel panel = new ImagePanel();
-    Image img = new ImageIcon("src\\main\\java\\GUI\\imgaes\\backgroundImage.jpg").getImage();
+
     int distributable_point = 20;
-    JLabel lb_distributable_point = new JLabel(Integer.toString(distributable_point));
+    JLabel lb_distributable_point = new JLabel("You can use  "+ Integer.toString(distributable_point)+"  Point");
     JPanel movetab = new JPanel();
-    JButton next = new JButton("next");
-    JButton prev = new JButton("prev");
+    JButton next = new JButton(new ImageIcon(ImageIO.read(this.getClass().getClassLoader().getResourceAsStream("images/next.png"))));
+    JButton prev = new JButton(new ImageIcon(ImageIO.read(this.getClass().getClassLoader().getResourceAsStream("images/prev.png"))));
 
-    String player_imgpath = "src\\main\\java\\GUI\\imgaes\\player1-portrait.png";
-    String player_name_imgpath = "src\\main\\java\\GUI\\imgaes\\player1_name.png";
+    String player_imgpath = "images/player1-portrait.png";
+    String player_name_imgpath = "images/player1_name.png";
+
+    ImagePanel imagePanel = new ImagePanel();
+    Image status_background = new ImageIcon(ImageIO.read(this.getClass().getClassLoader().getResourceAsStream("images/backgroundImage.jpg"))).getImage();
 
 
-    SetStatus_page() {
+    Image status_img = new ImageIcon(ImageIO.read(this.getClass().getClassLoader().getResourceAsStream("images/SELECTOR.PNG"))).getImage();
+
+    SetStatus_page() throws IOException {
+        getContentPane().add(imagePanel);
+        imagePanel.setLayout(null);
         //player 1 , 2  이름 및 이미지 변환
         if (Player.getCurrentPlayer() == Player.getPlayer(1)) {
-            player_imgpath = "src\\main\\java\\GUI\\imgaes\\player2-portrait.png";
-            player_name_imgpath = "src\\main\\java\\GUI\\imgaes\\player2_name.png";
+            player_imgpath = "images/player2-portrait.png";
+            player_name_imgpath = "images/player2_name.png";
         }
-
-
-
         setResizable(false);
-        getContentPane().setLayout(null);
         setBounds(0, 0, 1200, 960);
 
         movetab.setBackground(Color.white);
 
-        getContentPane().add(movetab);
+        imagePanel.add(movetab);
         movetab.setLayout(null);
         movetab.setBounds(0, 0, 1182, 146);
 
+
+        Font distrfont = new Font("distrfont",Font.PLAIN,30);
+        lb_distributable_point.setFont(distrfont);
+
+
         next.setBounds(935, 32, 180, 70);
         prev.setBounds(78, 32, 180, 70);
-        lb_distributable_point.setBounds(600, 32, 180, 70);
+        lb_distributable_point.setBounds(450, 32, 400, 70);
 
         movetab.add(next);
         movetab.add(lb_distributable_point);
         movetab.add(prev);
 
-        // doesNextPlayerStatusSetted() 여기서 분기할 때 player 1,2 name_img, img path만 스트링으로 받아서 바꾸게 해주면 될거 같음 ㅇㅇ
-        // 일단 그렇게 해둠
-
-        JLabel player_name = new JLabel(new ImageIcon(player_name_imgpath));
+        JLabel player_name = new JLabel(new ImageIcon(ImageIO.read(this.getClass().getClassLoader().getResourceAsStream(player_name_imgpath))));
         player_name.setBounds(121, 566, 365, 155);
-        getContentPane().add(player_name);
+        imagePanel.add(player_name);
 
-        JLabel player_img = new JLabel(new ImageIcon(player_imgpath));
+        JLabel player_img = new JLabel(new ImageIcon(ImageIO.read(this.getClass().getClassLoader().getResourceAsStream(player_imgpath))));
         player_img.setBounds(128, 216, 358, 356);
-        getContentPane().add(player_img);
+        imagePanel.add(player_img);
 
-        perstatus_set status_power = new perstatus_set("src\\main\\java\\GUI\\imgaes\\1.png");
-        JPanel perstatus = new JPanel();
+        perstatus_set status_power = new perstatus_set("images/POWER.PNG");
+        statusImagePanel perstatus = new statusImagePanel();
+
+        perstatus.setOpaque(false);
         perstatus.setBounds(592, 206, 590, 82);
-        getContentPane().add(perstatus);
+        imagePanel.add(perstatus);
         perstatus.add(status_power);
 
-        perstatus_set status_dex = new perstatus_set("src\\main\\java\\GUI\\imgaes\\2.png");
-        JPanel perstatus_1 = new JPanel();
+        perstatus_set status_dex = new perstatus_set("images/DEXTERITY.PNG");
+        statusImagePanel perstatus_1 = new statusImagePanel();
+
+        perstatus_1.setOpaque(false);
         perstatus_1.setBounds(592, 477, 590, 82);
-        getContentPane().add(perstatus_1);
+        imagePanel.add(perstatus_1);
         perstatus_1.add(status_dex);
 
-        perstatus_set status_intelligence = new perstatus_set("src\\main\\java\\GUI\\imgaes\\3.png");
-        JPanel perstatus_2 = new JPanel();
+        perstatus_set status_intelligence = new perstatus_set("images/INTEL.PNG");
+        statusImagePanel perstatus_2 = new statusImagePanel();
+
+        perstatus_2.setOpaque(false);
         perstatus_2.setBounds(592, 345, 590, 82);
-        getContentPane().add(perstatus_2);
+        imagePanel.add(perstatus_2);
         perstatus_2.add(status_intelligence);
 
-        perstatus_set status_mental = new perstatus_set("src\\main\\java\\GUI\\imgaes\\4.png");
-        JPanel perstatus_3 = new JPanel();
+        perstatus_set status_mental = new perstatus_set("images/MENTAL.PNG");
+        statusImagePanel perstatus_3 = new statusImagePanel();
+
+        perstatus_3.setOpaque(false);
         perstatus_3.setBounds(592, 602, 590, 82);
-        getContentPane().add(perstatus_3);
+        imagePanel.add(perstatus_3);
         perstatus_3.add(status_mental);
 
-        perstatus_set statuts_health = new perstatus_set("src\\main\\java\\GUI\\imgaes\\5.png");
-        JPanel perstatus_4 = new JPanel();
+        perstatus_set statuts_health = new perstatus_set("images/HEALTH.PNG");
+        statusImagePanel perstatus_4 = new statusImagePanel();
+
+        perstatus_4.setOpaque(false);
         perstatus_4.setBounds(592, 728, 590, 82);
-        getContentPane().add(perstatus_4);
+        imagePanel.add(perstatus_4);
         perstatus_4.add(statuts_health);
+
+
 
         next.addActionListener(new ActionListener() {
             @Override
@@ -118,15 +132,22 @@ public class SetStatus_page extends JFrame {
                 GameMaster.setInitializePlayerStats(total_value);
                 Player.toggleCurrentPlayer();
 
-
-
-                if (doesNextPlayerStatusSetted()){
-                    MainGamePageController maingame_page_controller = new MainGamePageController();
+                if (doesNextPlayerStatusSetted()) {
+                    MainGamePageController maingame_page_controller = null;
+                    try {
+                        maingame_page_controller = new MainGamePageController();
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
                     maingame_page_controller.maingame_page.setVisible(true);
                     dispose();
-                }
-                else{
-                    JFrame nextPage = new SetStatus_page();
+                } else {
+                    JFrame nextPage = null;
+                    try {
+                        nextPage = new SetStatus_page();
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
                     nextPage.setVisible(true);
                     dispose();
                 }
@@ -136,28 +157,50 @@ public class SetStatus_page extends JFrame {
         prev.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                SetBoss_page prev = new SetBoss_page();
+                SetBoss_page prev = null;
+                try {
+                    prev = new SetBoss_page();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
                 prev.setVisible(true);
                 dispose();
             }
         });
     }
 
-
-
     private boolean doesNextPlayerStatusSetted() {
         return Player.getCurrentPlayer().getPower() != null;
     }
 
-        @Data
+    @Getter
+    @Setter
     class perstatus_set extends JPanel {
         private int value = 0;
 
-        perstatus_set(String path) {
-            JLabel status_name = new JLabel(new ImageIcon(path));
+        perstatus_set(String path) throws IOException {
+            Font font = new Font("font",Font.ITALIC,25);
+
+            JLabel status_name = new JLabel(new ImageIcon(ImageIO.read(this.getClass().getClassLoader().getResourceAsStream(path))));
             JLabel status_value = new JLabel(Integer.toString(value));
-            JButton plus = new JButton("plus");
-            JButton minus = new JButton("minus");
+            status_value.setFont(font);
+            status_value.setForeground(Color.white);
+
+            JButton plus = new JButton(new ImageIcon(ImageIO.read(this.getClass().getClassLoader().getResourceAsStream("images/plus-for-status.png"))));
+            plus.setOpaque(false);
+            plus.setFocusPainted(false);
+            plus.setContentAreaFilled(false);
+            plus.setBorderPainted(false);
+
+            JButton minus = new JButton(new ImageIcon(ImageIO.read(this.getClass().getClassLoader().getResourceAsStream("images/minus-for-status.png"))));
+            minus.setOpaque(false);
+            minus.setFocusPainted(false);
+            minus.setContentAreaFilled(false);
+            minus.setBorderPainted(false);
+
+
+
+            Image dialog = new ImageIcon("images/plus-for-status.png").getImage();
 
             plus.addActionListener(new ActionListener() {
                 @Override
@@ -167,7 +210,7 @@ public class SetStatus_page extends JFrame {
                         value++;
                     }
                     status_value.setText(Integer.toString(value));
-                    lb_distributable_point.setText(Integer.toString(distributable_point));
+                    lb_distributable_point.setText("You can use  "+ Integer.toString(distributable_point)+"  Point");
                 }
             });
             minus.addActionListener(new ActionListener() {
@@ -178,26 +221,30 @@ public class SetStatus_page extends JFrame {
                         value--;
                     }
                     status_value.setText(Integer.toString(value));
-                    lb_distributable_point.setText(Integer.toString(distributable_point));
+
+                    lb_distributable_point.setText("You can use  "+ Integer.toString(distributable_point)+"  Point");
                 }
             });
             add(status_name);
             add(status_value);
             add(plus);
             add(minus);
+            setOpaque(false);
         }
-    }
 
+    }
     class ImagePanel extends JPanel {
+
         public void paintComponent(Graphics g) {
             super.paintComponent(g);
-            g.drawImage(img, 0, 0, 1200, 960, this);
+            g.drawImage(status_background, 0, 0, 1200, 960, this);
         }
     }
+    class statusImagePanel extends JPanel {
 
-    public static void main(String[] args) {
-        SetStatus_page frame = new SetStatus_page();
-        frame.setVisible(true);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        public void paintComponent(Graphics g) {
+            super.paintComponent(g);
+            g.drawImage(status_img, 0, 0, 590, 80, this);
+        }
     }
 }

@@ -1,16 +1,12 @@
 package com;
 
-import lombok.Builder;
-import lombok.Data;
-import lombok.NonNull;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
 public class Answer{
-    @NonNull
     private String message;
-    @NonNull
     private String tag;
-    @Builder.Default
     private ItemType item=null;
 
     Answer(String message, String tag)

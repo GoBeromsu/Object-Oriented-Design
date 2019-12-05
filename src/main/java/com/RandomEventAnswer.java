@@ -1,10 +1,10 @@
 package com;
-
-import GUI.DialogPanel;
 import GUI.Dice_page;
+import GUI.Game_resultPage;
+import GUI.Mainmusic_thread;
 
-import java.util.Timer;
-import java.util.TimerTask;
+
+import java.io.IOException;
 
 import static com.Player.idx_of_cur_player;
 
@@ -15,13 +15,15 @@ import static com.Player.idx_of_cur_player;
  */
 
 public class RandomEventAnswer {
+    static boolean swi=false;
+
     /**
      * 이벤트를 진행할 플레이어와 클릭한 선택지에 해당하는 지칭자로 알맞은 메소드를 호출하는 메소드
      *
      * @param answer <br>       메소드 지칭자를 포함하는 Answer 객체
      * @param player <br>       이벤트를 진행하는 플레이어
      */
-    public static void AnswerIndicator(Player player, Answer answer) {
+    public static void AnswerIndicator(Player player, Answer answer) throws IOException {
         switch (answer.getTag()) {
             case "1_1":
                 Ans1_1(player);
@@ -171,101 +173,15 @@ public class RandomEventAnswer {
                 Defeat_Ans(player);
                 break;
             case "boss_summon":
-                Boss_fight();
+                Boss_summon();
                 break;
             case "re_shop":
                 Return_To_Shop();
                 break;
-            case "attackedMonsterByPlayer":
-                attackedMonsterByPlayer();// 플레이어가 위치한 타일의 몬스터 혹은 임의로 넣어줘야 할 것 같은데 이건 넣어줘야 할듯
+            case "Ruin":
+                Ruin();
                 break;
-            case "attackedPlayerByMonster":
-                attackedPlayerByMonster();
-                break;
-            case "MonsterWin":
-                MonsterWin();
-                break;
-            case "PlayerWinFromMonsterFight":
-                PlayerWinFromMonsterFight();
-                break;
-
         }
-    }
-
-    public static void PlayerWinFromMonsterFight(){
-        FightMonsterController.fight_monster_page.dispose();
-        DialogPanelController.Clear();
-        DialogPanelController.generateGeneralDialogues();
-    }
-
-    public static void MonsterWin() {
-        FightMonsterController.fight_monster_page.dispose();
-        DialogPanelController.Clear();
-        DialogPanelController.generateGeneralDialogues();
-    }
-
-    public static void attackedPlayerByMonster() {
-        FightDialogPanelController.Clear();
-        Player player = Player.getCurrentPlayer();
-        int temp2 = ConstantEventHandler.Dice();
-        Monster monster = FightMonsterController.monster;
-        if (temp2 > monster.getRequireVal()) {
-            FightDialogPanelController.show_dialog(
-                    "몬스터가 플레이어에게 "
-                            + Integer.toString(monster.getDamage())
-                            + "의 피해를 주었습니다."
-            );
-
-            if (monster.getDamageType() == 1)
-                player.setHealth(player.getHealth() - monster.getDamage());
-            else if (monster.getDamageType() == 2)
-                player.setMental(player.getMental() - monster.getDamage());
-        } else {
-            FightDialogPanelController.show_dialog("데미지를 입히지 못했습니다.");
-        }
-
-        if (player.getHealth() < 1) {
-            FightDialogPanelController.Clear();
-
-            FightDialogPanelController.show_dialog("몬스터가 플레이어에게 "
-                    + Integer.toString(monster.getDamage())
-                    + "의 피해를 주었습니다. "
-                    + "몬스터와의 전투에서 패배하였습니다.");
-            player.setStatus(Player.DEAD);
-            FightDialogPanelController.show_dialog_answer1(new Answer("전투 종료(몬스터 승리)", "MonsterWin"));
-        } else
-            FightDialogPanelController.show_dialog_answer1(new Answer("몬스터를 공격 합니다.", "attackedMonsterByPlayer"));
-    }
-
-    public static void attackedMonsterByPlayer() {
-        FightDialogPanelController.Clear();
-        int temp = ConstantEventHandler.Dice();
-        Monster monster = FightMonsterController.monster;
-        if (temp > monster.getRequireVal()) {
-            FightDialogPanelController.show_dialog(
-                    "플레이어가 몬스터에게 "
-                            + Integer.toString(temp - monster.getRequireVal())
-                            + "의 피해를 주었습니다."
-            );
-            monster.setHealth(monster.getHealth() - (temp - monster.getRequireVal()));
-        } else {
-            FightDialogPanelController.show_dialog("데미지를 입히지 못했습니다.");
-        }
-
-
-        if (monster.getHealth() < 1) {
-            FightDialogPanelController.Clear();
-            FightDialogPanelController.show_dialog(
-                    "플레이어가 몬스터에게 "
-                            + Integer.toString(temp - monster.getRequireVal())
-                            + "의 피해를 주었습니다.\n"
-                    + "몬스터와의 전투에서 승리하였습니다.");
-            Player player = Player.getCurrentPlayer();
-            player.setMoney(player.getMoney() + monster.getMonster_result());
-            Map.tiles[player.getPos().ordinal()].setSummoned_monster(null);
-            FightDialogPanelController.show_dialog_answer1(new Answer("전투종료(플레이어 승리)", "PlayerWinFromMonsterFight"));
-        } else
-            FightDialogPanelController.show_dialog_answer1(new Answer("몬스터가 공격 합니다.", "attackedPlayerByMonster"));
     }
 
     public static void Ans1_1(Player player)//서브 이벤트 구현에 대한 이야기 필요
@@ -332,7 +248,7 @@ public class RandomEventAnswer {
         DialogPanelController.show_dialog_answer2(answer2);
     }
 
-    public static void Ans2_2(Player player) {
+    public static void Ans2_2(Player player) throws IOException {
         DialogPanelController.Clear();
         String message = "소리를 내는 기괴한 생물체를 발견했습니다.";
         DialogPanelController.show_dialog(message);
@@ -935,6 +851,10 @@ public class RandomEventAnswer {
 
     public static void Win_Ans(Player player) {
         //승리 화면 출력
+        Game_resultPage game_result_page = new Game_resultPage("win");
+        game_result_page.setVisible(true);
+        MainGamePageController.maingame_page.dispose();
+        Mainmusic_thread.thread.stop();
     }
 
     public static void Defeat(Player player) {
@@ -945,20 +865,33 @@ public class RandomEventAnswer {
             DialogPanelController.show_dialog_answer1(answer1);
         } else {
             DialogPanelController.Clear();
-            RandomEventAnswer.Boss_Summon(player);
+            RandomEventAnswer.checkBoss_Summon_condition(player);
         }
     }
 
     public static void Defeat_Ans(Player player) {
         //패배 화면 출력
+        Game_resultPage game_result_page = new Game_resultPage("defeat");
+        game_result_page.setVisible(true);
+        MainGamePageController.maingame_page.dispose();
+        Mainmusic_thread.thread.stop();
     }
 
-    public static void Boss_Summon(Player player) {
+    public static void checkBoss_Summon_condition(Player player) {
         if (GameMaster.check_num_of_monsters_portals_for_boss()) {
             DialogPanelController.Clear();
-            DialogPanelController.show_dialog("고대신이 잠에서 깨어납니다. 모두 대비하십시오!");
-            Answer answer1 = new Answer("고대신과의 최종전", "boss_fight");
+            if(GameMaster.current_boss.getType()==BossType.AZATHOTH)
+            {
+                DialogPanelController.show_dialog("아자토스가 잠에서 깨어납니다. 이에 저항할 수 있는 방법은 없습니다.");
+                Answer answer1 = new Answer("멸망을 받아들인다", "Ruin");
+                DialogPanelController.show_dialog_answer1(answer1);
+            }
+            else
+            {
+                DialogPanelController.show_dialog("고대신이 잠에서 깨어납니다. 모두 대비하십시오!");
+            Answer answer1 = new Answer("고대신과의 최종전", "boss_summon");
             DialogPanelController.show_dialog_answer1(answer1);
+            }
         } else {
             DialogPanelController.Clear();
             if (idx_of_cur_player == 1)
@@ -968,11 +901,20 @@ public class RandomEventAnswer {
         }
     }
 
-    public static void Boss_fight() {
-        GameMaster.generateBossFight(GameMaster.current_boss);
+    public static void Ruin()
+    {
+        Game_resultPage result;
+        MainGamePageController.maingame_page.dispose();
+        result = new Game_resultPage("defeat");
+        result.setVisible(true);
+    }
+
+    public static void Boss_summon() {
+        Fight_boss_controller fight_boss_page = new Fight_boss_controller();
     }
 
     public static void Next_Turn(Player player) {
+        MainGamePageController.show_players();
         if (GameMaster.turn % 3 == 0) {
             GameMaster.setPortalAndMonsterRandomly();
             MainGamePageController.show_monsters();
@@ -1001,6 +943,7 @@ public class RandomEventAnswer {
     }
 
     public static void Next_Player(Player player) {
+        MainGamePageController.show_players();
         Player.toggleCurrentPlayer();
 
         // Update turn value to MainGame_page(view)

@@ -1,27 +1,40 @@
 package GUI;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
+import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
+import java.io.IOException;
 
-import javax.swing.JButton;
-import javax.swing.JPanel;
-import javax.swing.JLabel;
-
-@Data
+@Getter
+@Setter
 public class DialogPanel extends JPanel {
+
+
+    Image dialog;
+
+    {
+        try {
+            dialog = new ImageIcon(ImageIO.read(this.getClass().getClassLoader().getResourceAsStream("images/DIALOG-PANEL.PNG"))).getImage();
+        } catch (IOException e) {
+            dialog = null;
+            e.printStackTrace();
+        }
+    }
 
     JLabel lb_just_text = new JLabel("Mac morning");
     JButton selectbtn3 = new JButton("Example3");
     JButton selectbtn2 = new JButton("Example2");
     JButton selectbtn1 = new JButton("Example1");
+
     public DialogPanel() {
+      setLayout(null);
 //        add(turnEnd);
 //        setLayout(new GridLayout(4, 1, 0, 20));
-        setLayout(null);
+
         lb_just_text.setBounds(35, 32, 497, 90);
         selectbtn1.setBounds(84, 177, 401, 45);
         selectbtn2.setBounds(84, 248, 401, 45);
@@ -33,6 +46,9 @@ public class DialogPanel extends JPanel {
         add(selectbtn3);
 
     }
-    // https://fora.tistory.com/31 여기 나온 것처럼 이 패널의 controller 만들어서 관리 해야 하나? 아니면 MainGame_page의 패널 만들어서 관리해야 하려나.. 고민해봐야 할 듯
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        g.drawImage(dialog, 0, 0, 569, 430, this);
+    }
 
 }

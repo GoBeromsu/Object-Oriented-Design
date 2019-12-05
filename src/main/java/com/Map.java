@@ -1,6 +1,4 @@
 package com;
-
-
 import java.util.ArrayList;
 
 /**
@@ -10,7 +8,7 @@ import java.util.ArrayList;
  * @version 1.0
  */
 public class Map {
-    public static Tile[] tiles; // tiles의 인덱스 == TileType의 인덱스 : 각 타일 접근성 향상을 위해
+    public static Tile[] tiles;
     static private int[][] path_validating_data = {
             {2, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0},
             {1, 2, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0},
@@ -43,10 +41,6 @@ public class Map {
 
     public static boolean getPortalAt(TileType pos) {
         return tiles[pos.ordinal()].isSummoned_portal();
-    }
-
-    public static void setMonsterAt(TileType pos, Monster monster) {
-        tiles[pos.ordinal()].setSummoned_monster(monster);
     }
 
     public static ArrayList<TileType> getMovableTiles(Player player) {

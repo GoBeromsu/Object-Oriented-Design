@@ -17,7 +17,6 @@ public class Tile {
     @Builder.Default
     private boolean summoned_portal=false;
     @Builder.Default
-
     private Monster summoned_monster=null;
     private final TileType tile_type;
 }

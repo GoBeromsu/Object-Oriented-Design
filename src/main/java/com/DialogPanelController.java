@@ -1,13 +1,11 @@
 package com;
 import GUI.DialogPanel;
-import GUI.Dice_page;
 import lombok.Data;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.io.IOException;
 
 @Data
 public class DialogPanelController {
@@ -26,7 +24,7 @@ public class DialogPanelController {
         selectbtn3 = dialog_panel.getSelectbtn3();
         generateGeneralDialogues();
     }
-    // TODO : Clear의 의미를 재 정의 해야할 듯.. 뭔가 어떤 시점에서는 무조건 clear를 한다 이런거?
+
     static public void Clear(){
         lb_just_text.setText("");
         selectbtn1.setText("");
@@ -44,7 +42,6 @@ public class DialogPanelController {
     public static void generateGeneralDialogues(){
 
         Clear();
-        // 플레이어가 맨 처음에 위치 이동, 랜덤 이벤트 실행, 턴 종료 총 세가지 이벤트를 처리할 수 있도록 기본적으로 출력되는 것을 세팅한다.
 
             StringBuilder sb = new StringBuilder();
             sb.append(Player.idx_of_cur_player + 1);
@@ -58,14 +55,12 @@ public class DialogPanelController {
         selectbtn1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // 플레이어 위치 이동 관련 메소드 타일에서 클릭 가능하게 하는 메소드 호출 이후,
-                // 현재 플레이어가 갈 수 있는 위치 출력하는 메소드 출력 등등
 
                 if(Player.getCurrentPlayer().getEnergy()<1)
                 {
                     Clear();
                     DialogPanelController.show_dialog("사용 가능한 행동치가 없습니다.");
-                    //TODO : Need to refactor :: show_dialog_answer1 could be overloading
+
                     DialogPanelController.show_dialog_answer1(new Answer("1. 턴 종료","turnEnd"));
                 }
                 else
@@ -81,7 +76,6 @@ public class DialogPanelController {
         selectbtn2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // 랜덤 이벤트 관련 메소드 호출
                 if(Player.getCurrentPlayer().getEnergy()<1)
                 {
                     Clear();
@@ -99,9 +93,8 @@ public class DialogPanelController {
         selectbtn3.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // 턴 종료 관련 메소드 호출
                 Clear();
-                RandomEventAnswer.Win_check(Player.getCurrentPlayer());
+                GameMaster.turnEnd();
             }
         });
 
@@ -146,7 +139,7 @@ public class DialogPanelController {
             public void actionPerformed(ActionEvent e) {
                 if(answer.getTag()=="shop")
                 {
-                    if(ConstantEventHandler.isAffordable(Player.getCurrentPlayer(), answer.getItem()))
+                    if(!ConstantEventHandler.isAffordable(Player.getCurrentPlayer(), answer.getItem()))
                     {
                         RandomEventAnswer.Not_Enough_Money();
                     }
@@ -158,8 +151,13 @@ public class DialogPanelController {
                         RandomEventAnswer.Purchase_Complete();
                     }
                 }
-                else
-                    RandomEventAnswer.AnswerIndicator(Player.getCurrentPlayer(), answer);
+                else {
+                    try {
+                        RandomEventAnswer.AnswerIndicator(Player.getCurrentPlayer(), answer);
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+                }
                 dialog_panel.revalidate();
                 dialog_panel.repaint();
             }
@@ -185,8 +183,13 @@ public class DialogPanelController {
                         RandomEventAnswer.Purchase_Complete();
                     }
                 }
-                else
-                    RandomEventAnswer.AnswerIndicator(Player.getCurrentPlayer(), answer);
+                else {
+                    try {
+                        RandomEventAnswer.AnswerIndicator(Player.getCurrentPlayer(), answer);
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+                }
                 dialog_panel.revalidate();
                 dialog_panel.repaint();
             }
@@ -212,8 +215,13 @@ public class DialogPanelController {
                         RandomEventAnswer.Purchase_Complete();
                     }
                 }
-                else
-                    RandomEventAnswer.AnswerIndicator(Player.getCurrentPlayer(), answer);
+                else {
+                    try {
+                        RandomEventAnswer.AnswerIndicator(Player.getCurrentPlayer(), answer);
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+                }
                 dialog_panel.revalidate();
                 dialog_panel.repaint();
             }
@@ -221,14 +229,5 @@ public class DialogPanelController {
         selectbtn3.setVisible(true);
     };
 
-    /*
-    @Deprecated
-     */
-    class SelectBtnListener implements ActionListener{
-        @Override
-        public void actionPerformed(ActionEvent e){
-            Clear();
-        }
-    }
 
 }

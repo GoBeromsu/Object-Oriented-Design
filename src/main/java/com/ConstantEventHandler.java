@@ -4,6 +4,8 @@ import GUI.Dice_page;
 import GUI.Fight_monster_page;
 
 import static com.Map.*;
+
+import java.io.IOException;
 import java.util.ArrayList;
 
 
@@ -20,24 +22,20 @@ public class ConstantEventHandler
 
     static ArrayList<ItemType> itemlist=new ArrayList<ItemType>();
     static boolean shop_maintain_switch=false;
+    static int fight_remain=0;
 
     static void generateRandomEvent(Player player)
     {
         int event_num=(int)Math.floor(Math.random()*21);
         RandomEventHandler.RandomEventIndicator(player, event_num);
     }
-    static public void move(Player player, TileType tile)
-    {
+    static public void move(Player player, TileType tile) throws IOException {
         boolean valid = pathValid(player, tile);
 
         if(valid)
         {
             player.setPos(tile);
             CheckEventHere(player, tile);
-        }
-        else
-        {
-//            ShowDialog("이동할 수 없는 곳입니다");
         }
     }
     static void movebyTeleport(Player player, TileType tile){player.setPos(tile);}
@@ -48,14 +46,11 @@ public class ConstantEventHandler
      * @param tile
      *        목적지
      */
-    static public void CheckEventHere(Player player, TileType tile)
-    {
+    static public void CheckEventHere(Player player, TileType tile) throws IOException {
         if(Map.getPortalAt(tile))
         {
-            Map.tiles[tile.ordinal()].setSummoned_monster(new Monster(MonsterType.values()[(int) Math.floor(Math.random() * 5)]));
-            generateFight(Map.getMonsterAt(tile).getMonster_type());
-            // TODO : 두 싸움 사이에 딜레이가 들어가야 한다. 차례차례 싸워야 함 아니면 한번만 싸우도록 바꿔야 한다.
-//            generateFight(player, MonsterType.Dagon);              //포털을 닫기 위해서는 2번의 전투 필요
+            fight_remain=2;
+            generateFight(MonsterType.values()[(int) Math.floor(Math.random() * 5)]);
             if(player.getHealth() > 0)
             {
                 GameMaster.token++;
@@ -63,26 +58,17 @@ public class ConstantEventHandler
                 Map.tiles[tile.ordinal()].setSummoned_portal(false);
                 MainGamePageController.show_portals();
             }
-            DialogPanelController.Clear();
-            DialogPanelController.generateGeneralDialogues();
         }
-        if(Map.getMonsterAt(tile) != null)
+        else if(Map.getMonsterAt(tile) != null)
         {
+            fight_remain=1;
             ConstantEventHandler.generateFight(Map.getMonsterAt(tile).getMonster_type());
-            if(player.getHealth() > 0)
-            {
-                Map.tiles[tile.ordinal()].setSummoned_monster(null);
-                MainGamePageController.show_monsters();
-            }
-            DialogPanelController.Clear();
-            DialogPanelController.generateGeneralDialogues();
         }
-
-        if(tile == TileType.HOSPITAL)
+        else if(tile == TileType.HOSPITAL)
         {
             hospital(player);
         }
-        else if(tile == TileType.MENTAL_HOSTPITAL)
+        else if(tile == TileType.MENTAL_HOSPITAL)
         {
             mospital(player);
         }
@@ -102,29 +88,23 @@ public class ConstantEventHandler
         ArrayList<ItemType> tempitems = player.getItems();
         tempitems.add(item);
         player.setItems(tempitems);
+        player.setHealth(player.getHealth()+item.getHealth());
+        player.setMental(player.getMental()+item.getMental());
+        player.setPower(player.getPower()+item.getPower());
+        player.setDexterity(player.getDexterity()+item.getDex());
+        player.setIntelligence(player.getIntelligence()+item.getInt());
     }
-
-
-    static void deleteItem(Player player, ItemType item)
-    {
-        ArrayList<ItemType> tempitems=player.getItems();
-        for(int i=0;i<tempitems.size();i++)
-        {
-            if(tempitems.get(i)==item)
-            {
-                tempitems.remove(i);
-            }
-        }
-        player.setItems(tempitems);
-    }
-
-
     static void addRandomItem(Player player)
     {
         int tempRand=(int)Math.floor(Math.random()*15);
         ArrayList<ItemType> tempitems=player.getItems();
         tempitems.add(ItemType.values()[tempRand]);
         player.setItems(tempitems);
+        player.setHealth(player.getHealth()+ItemType.values()[tempRand].getHealth());
+        player.setMental(player.getMental()+ItemType.values()[tempRand].getMental());
+        player.setPower(player.getPower()+ItemType.values()[tempRand].getPower());
+        player.setDexterity(player.getDexterity()+ItemType.values()[tempRand].getDex());
+        player.setIntelligence(player.getIntelligence()+ItemType.values()[tempRand].getInt());
     }
 
 
@@ -144,8 +124,8 @@ public class ConstantEventHandler
         DialogPanelController.show_dialog_answer2(ConstantEventAnswer.mospital2);
     }
 
-    static void generateFight(MonsterType monster){
-        FightMonsterController fightwithmonster = new FightMonsterController(monster);
+    static void generateFight(MonsterType monster) throws IOException {
+        Fight_monster_page fightwithmonster = new Fight_monster_page(new Monster(monster));
     }
 
     public static int  Dice(){
@@ -153,7 +133,6 @@ public class ConstantEventHandler
         Dice.setVisible(true);
 
         java.util.Timer timer = new Timer();
-        // 이게 반복되어야할 이유가 있나?
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
@@ -174,8 +153,6 @@ public class ConstantEventHandler
     {
         return player.getMoney()-item.getPrice();
     }
-    static void sellItem(Player player, ItemType item){}
-    static ItemType getItem(ItemType item){return null;}
 
     static ArrayList<ItemType> getRandomItemList()
     {
@@ -205,22 +182,6 @@ public class ConstantEventHandler
             Monster tempMon=new Monster(monster);
             Map.tiles[tile.ordinal()].setSummoned_monster(tempMon);
         }
-    }
-
-    /**
-     * Answer 객체가 이벤트용인지 상점용인지 구별하는 메소드<br>
-     * @param answer
-     * <br>판별할 Answer
-     * @return
-     * <br>true=이벤트용
-     * <br>false=상점용
-     */
-    static boolean AnswerChecker(Answer answer)
-    {
-        if(answer.getItem()==null)
-            return true;
-        else
-            return false;
     }
 
     static void shop()
@@ -267,5 +228,14 @@ public class ConstantEventHandler
         DialogPanelController.show_dialog_answer2(item2);
         if(itemlist.get(2)!=null)
         DialogPanelController.show_dialog_answer3(item3);
+
+        if(itemlist.get(0)==null&&itemlist.get(1)==null&&itemlist.get(2)==null)
+        {
+            DialogPanelController.Clear();
+            String message3="오늘의 물건들은 모두 팔렸습니다. 다음 번에 방문해주시길.";
+            DialogPanelController.show_dialog(message3);
+            Answer answer1 = new Answer("1. 상점 나가기", "continue");
+            DialogPanelController.show_dialog_answer1(answer1);
+        }
     }
 }
