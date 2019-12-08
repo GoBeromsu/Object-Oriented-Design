@@ -3,23 +3,35 @@ package GUI;
 import com.Boss;
 import com.BossType;
 import com.GameMaster;
+import com.Mainmusic_thread;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
 /**
  * 새로 게임을 생성할 때 보스를 설정하는 페이지이다.
+ * @author Beomsu Ko
  */
 public class SetBoss_page extends JFrame {
 
     ImagePanel panel = new ImagePanel();
-    Image boss_background = new ImageIcon("src\\main\\java\\GUI\\imgaes\\backgroundImage.jpg").getImage();
+    Image boss_background = new ImageIcon(ImageIO.read(this.getClass().getClassLoader().getResourceAsStream("images/backgroundImage.jpg"))).getImage();
 
     SetBoss_page() throws IOException {
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                super.windowClosing(e);
+                System.exit(0);
+                Mainmusic_thread.thread.stop();
+            }
+        });
         getContentPane().add(panel);
         panel.setLayout(null);
         setResizable(false);
@@ -83,7 +95,9 @@ public class SetBoss_page extends JFrame {
         boss3.add(Test3);
         panel.add(boss3);
     }
-
+    /**
+     * information about boss
+     */
     class BossPanel extends JPanel {
 
         public BossPanel(String img_path, BossType bosstype, String boss_win, String boss_name_imgpath) throws IOException {
@@ -103,7 +117,7 @@ public class SetBoss_page extends JFrame {
                 img_boss = null;
             }
             Image temp = new ImageIcon(img_boss).getImage();
-            Image temp_2 = temp.getScaledInstance(400, 500, java.awt.Image.SCALE_SMOOTH);
+            Image temp_2 = temp.getScaledInstance(300, 400, java.awt.Image.SCALE_SMOOTH);
             ImageIcon real = new ImageIcon(temp_2);
 
             JButton bossimg = new JButton(real);
@@ -149,7 +163,9 @@ public class SetBoss_page extends JFrame {
         }
 
     }
-
+    /**
+     * To paint background
+     */
     class ImagePanel extends JPanel {
 
         public void paintComponent(Graphics g) {

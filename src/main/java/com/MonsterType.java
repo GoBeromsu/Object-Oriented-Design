@@ -9,11 +9,27 @@ public enum MonsterType {
 
     private String name;
     private int initial_health;
+
+    /**
+     * 공격을 받거나 수행할 때 기준이 되는 주사위의 초기 수치이다.
+     */
     private int initial_requireVal;
     private int initial_damage;
+
+    /**
+     * 공격을 할때 정신력을 공격하는 것인지, 체력을 공격하는 것인지에 관한 기준이 되는 값이다.
+     */
     private int initial_damageType;
+
+    /**
+     * 몬스터와의 전투에서 승리하였을 경우, 플레이어가 얻을 수 있는 돈의 양
+     */
     private int initial_monster_result;
     private String inintial_imgpath;
+
+    /**
+     * 몬스터가 움직이는 gif 파일의 경로이다. //??? 맞나요?
+     */
     private String imgpath_for_Fight;
 
     MonsterType(String name, int health, int requireVal, int damage, int damageType, int monster_result,String imagepath, String imgpath2) {

@@ -6,6 +6,8 @@ import lombok.Setter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
@@ -13,7 +15,8 @@ import javax.swing.*;
 
 
 /**
- * Dialog 창, map. 플레이어들의 간략화 된 스탯 및 token을 보여주는 클래스이다.
+ * Dialog 창, map 등, 플레이어들의 간략화 된 스탯 및 token을 보여주는 클래스이다.
+ * @author Se-Ok Jeon Beomsu Ko
  */
 
 @Getter
@@ -42,7 +45,7 @@ public class MainGame_page extends JFrame {
     JLabel lb_player2_name;
     PlayerStatusPanel player2_status_panel;
 
-    ImageIcon portal_img = new ImageIcon("src\\main\\java\\GUI\\imgaes\\portal.png");
+    ImageIcon portal_img = new ImageIcon(ImageIO.read(this.getClass().getClassLoader().getResourceAsStream("images/portal.png")));
     JLabel portal_img_0 = new JLabel(portal_img);
     JLabel portal_img_1 = new JLabel(portal_img);
     JLabel portal_img_2 = new JLabel(portal_img);
@@ -81,7 +84,7 @@ public class MainGame_page extends JFrame {
     public class MainGameTabPanel extends JPanel {
         Font tabFont = new Font("tabfont",Font.PLAIN,20);
 
-        JButton status = new JButton("Status");
+        JButton status = new JButton(new ImageIcon(ImageIO.read(this.getClass().getClassLoader().getResourceAsStream("images/STATUS.PNG"))));
 
         JLabel token = new JLabel("token");
 
@@ -89,13 +92,18 @@ public class MainGame_page extends JFrame {
         JLabel turn = new JLabel("Turn");
         JTextPane turn_text = new JTextPane();
 
-        MainGameTabPanel() {
+        MainGameTabPanel() throws IOException {
             status.setBounds(126, 36, 173, 53);
             status.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     final int FIRST_PLAYER_IDX = 0;
-                    MainGamePlayerStatusDetail_page temp = new MainGamePlayerStatusDetail_page(Player.getPlayer(FIRST_PLAYER_IDX));
+                    MainGamePlayerStatusDetail_page temp = null;
+                    try {
+                        temp = new MainGamePlayerStatusDetail_page(Player.getPlayer(FIRST_PLAYER_IDX));
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
                     temp.setVisible(true);
                 }
             });
@@ -195,6 +203,14 @@ public class MainGame_page extends JFrame {
     public MainGame_page() throws IOException {
         // 상단바
         {
+            this.addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosing(WindowEvent e) {
+                    super.windowClosing(e);
+                    System.exit(0);
+                    Mainmusic_thread.thread.stop();
+                }
+            });
             getContentPane().add(panel);
             panel.setLayout(null);
             setResizable(false);
@@ -344,7 +360,7 @@ public class MainGame_page extends JFrame {
             panel.add(player1_name);
 
             player1_status_panel = new PlayerStatusPanel(Player.getPlayer(0));
-            player1_status_panel.setBounds(200, 670, 318, 225);
+            player1_status_panel.setBounds(200, 620, 318, 225);
             player1_status_panel.setOpaque(false);
             panel.add(player1_status_panel);
 
@@ -370,7 +386,7 @@ public class MainGame_page extends JFrame {
             panel.add(lb_player2_name);
 
             player2_status_panel = new PlayerStatusPanel(Player.getPlayer(1));
-            player2_status_panel.setBounds(820, 670, 318, 225);
+            player2_status_panel.setBounds(820, 620, 318, 225);
             player2_status_panel.setOpaque(false);
             panel.add(player2_status_panel);
         }

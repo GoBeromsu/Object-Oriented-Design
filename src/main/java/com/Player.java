@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 
 /**
- * 플레이어 객체 모델
+ * 플레이어 모델로, 플레이어의 현재 위치나, 체력등의 수치를 포함하고 있다.
  * @author Se-Ok Jeon
  * @version 1.0
  */
@@ -14,6 +14,9 @@ import java.util.ArrayList;
 public class Player{
     static int idx_of_cur_player = 0;
     static public final int MAXIMUM_NUM_OF_PLAYERS = 2;
+    /**
+     * 게임을 하고 있는 플레이어들의 플레이어 객체들에 관한 배열이다.
+     */
     static Player[] players = new Player[MAXIMUM_NUM_OF_PLAYERS];
     static public final int ALIVE = 1;
     static public final int DEAD = 2;
@@ -29,6 +32,9 @@ public class Player{
     private int mental = 1;
     private int dexterity;
     private int intelligence;
+    /**
+     * @deprecated 개발 범위 축소로 사용하지 않게 된 속성이다.
+     */
     private String characteristics;
     private ArrayList<ItemType> items;
     @Builder.Default
@@ -38,6 +44,10 @@ public class Player{
         return players[idx_of_cur_player];
     }
     static public Player getPlayer(int idx){return players[idx];}
+
+    /**
+     * 현재 플레이어를 다음 플레이어로 변경하기 위한 메소드이다.
+     */
     static public void toggleCurrentPlayer(){
         idx_of_cur_player = idx_of_cur_player == 1 ? 0: 1;
     }

@@ -1,6 +1,7 @@
 package GUI;
 
 import com.GameMaster;
+import com.Mainmusic_thread;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -11,7 +12,8 @@ import java.io.IOException;
 
 
 /**
- * New Game Load Game EXIT 3개의 버튼으로 게임 시작 및 종료를 담당하는 페이지이다.
+ * New Game EXIT 2개의 버튼으로 게임 시작 및 종료를 담당하는 페이지이다.
+ * @author Beomsu Ko
  */
 public class Start_page extends JFrame {
 

@@ -1,27 +1,36 @@
 package GUI;
 
 import com.GameMaster;
+import com.Mainmusic_thread;
 import com.Player;
+import com.google.common.io.ByteStreams;
+
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.IOException;
+import java.io.InputStream;
 
 import static com.Fight_boss_controller.*;
 
 /**
- * boss나 monster와의 전투를 나타내는 페이지이다.
+ * boss와의 전투를 나타내는 페이지이다.
+ * @author Beomsu Ko
  */
 
 public class Fight_boss_page extends JFrame {
     public static MainGame_page.PlayerStatusPanel player1_status_panel;
     public static MainGame_page.PlayerStatusPanel player2_status_panel;
-    public static JLabel boss_temphealth;
+    public JLabel lblfight = new JLabel("");
+    public static boolean boss_result = false;
     public int turninboss = 0;
 
+    public int count = 0;
     public static ImageIcon star;
 
     static {
@@ -46,15 +55,25 @@ public class Fight_boss_page extends JFrame {
     public static JLabel boss_health[] = {boss_health_0, boss_health_1, boss_health_2, boss_health_3, boss_health_4,
             boss_health_5, boss_health_6, boss_health_7, boss_health_8, boss_health_9, boss_health_10};
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Fight_boss_page frame = new Fight_boss_page();
         frame.setVisible(true);
 
     }
 
 
-    public Fight_boss_page() {
-
+    public Fight_boss_page() throws IOException {
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                super.windowClosing(e);
+                System.exit(0);
+                Mainmusic_thread.thread.stop();
+            }
+        });
+        getContentPane().setBackground(Color.BLACK);
+        lblfight.setForeground(Color.white);
+        getContentPane().setBackground(Color.BLACK);
         Mainmusic_thread.thread.close();
         Mainmusic_thread music_thread = new Mainmusic_thread(this.getClass().getClassLoader().getResourceAsStream("music/boss_fight.mp3"), true);
         music_thread.start();
@@ -65,6 +84,7 @@ public class Fight_boss_page extends JFrame {
 
 
         JPanel BossHealthPanel = new JPanel();
+        BossHealthPanel.setBackground(Color.BLACK);
         BossHealthPanel.setBounds(0, 0, 1182, 153);
         getContentPane().add(BossHealthPanel);
         BossHealthPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
@@ -79,6 +99,9 @@ public class Fight_boss_page extends JFrame {
 
         }
 
+        getContentPane().add(lblfight);
+        lblfight.setVisible(true);
+        lblfight.setBounds(20, 300, 600, 100);
 
         //플레이어들의 스테이터스
         {
@@ -107,6 +130,7 @@ public class Fight_boss_page extends JFrame {
 
             player1_status_panel = new MainGame_page.PlayerStatusPanel(Player.getPlayer(0));
             player1_status_panel.setBounds(290, 670, 318, 225);
+            player1_status_panel.setBackground(Color.BLACK);
             getContentPane().add(player1_status_panel);
 
             ImageIcon player2_img = null;
@@ -132,43 +156,105 @@ public class Fight_boss_page extends JFrame {
 
             player2_status_panel = new MainGame_page.PlayerStatusPanel(Player.getPlayer(1));
             player2_status_panel.setBounds(864, 670, 318, 225);
+            player2_status_panel.setBackground(Color.BLACK);
             getContentPane().add(player2_status_panel);
         }
 
-        Image img_boss;
-        try {
-            img_boss = ImageIO.read(this.getClass().getClassLoader().getResourceAsStream(GameMaster.current_boss.getType().getActive_path()));
-        } catch (IOException e) {
-            e.printStackTrace();
-            img_boss = null;
+        class ImagePanel extends JPanel{
+            Image img_boss;
+            ImagePanel(InputStream is){
+                try {
+                    img_boss = Toolkit.getDefaultToolkit().createImage(ByteStreams.toByteArray(is));
+                    MediaTracker mt = new MediaTracker(this);
+                    mt.addImage(img_boss, 0);
+                    mt.waitForAll();
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    img_boss = null;
+                }
+
+            }
+            public void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                g.drawImage(img_boss, 0, 0, this);
+            }
         }
-        JLabel boss_panel = new JLabel(new ImageIcon(img_boss));
-        boss_panel.setBounds(75, 120, 1100, 480);
+
+        ImagePanel boss_panel = new ImagePanel(this.getClass().getClassLoader().getResourceAsStream(GameMaster.current_boss.getType().getActive_path()));
+        boss_panel.setBackground(Color.BLACK);
+        boss_panel.setBounds(400, 120, 1200, 480);
         getContentPane().add(boss_panel);
 
-        JButton fight = new JButton("startfight");
+
+        Image fight_btn = ImageIO.read(this.getClass().getClassLoader().getResourceAsStream("images/fight_start.png"));
+        fight_btn.getScaledInstance(300, 300, Image.SCALE_SMOOTH);
+
+
+        JButton fight = new JButton(new ImageIcon(fight_btn));
         getContentPane().add(fight);
-        fight.setBounds(120, 100, 200, 50);
+        fight.setForeground(Color.white);
+        fight.setBounds(50, 200, 300, 300);
+        fight.setFocusPainted(false);
+        fight.setContentAreaFilled(false);
+        fight.setBorderPainted(false);
+
+
         fight.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (turninboss % 2 == 0) {
-                    attackedBossByPlayer();
-                    System.out.println(Player.getCurrentPlayer());
-                    System.out.println("플레이어가 공격했음");
-                    turninboss++;
-                } else if (turninboss % 2 == 1) {
-                    attackedPlayerByBoss();
-                    System.out.println("boss 공격가 공격했음");
-                    turninboss++;
+                if (boss_result == false) {
+                    if (turninboss % 2 == 0) {
+                        try {
+                            attackedBossByPlayer();
+                        } catch (IOException ex) {
+                            ex.printStackTrace();
+                        }
+
+                        turninboss++;
+                    } else if (turninboss % 2 == 1) {
+                        try {
+                            attackedPlayerByBoss();
+                        } catch (IOException ex) {
+                            ex.printStackTrace();
+                        }
+                        turninboss++;
+                    }
                 }
-                checkWhoWin();
+                else{
+                    if (lblfight.getText() == "플레이어 패배 -----> 클릭해주세요    <-------" || lblfight.getText() == "플레이어 승리 -----> 클릭해주세요    <-------") {
+                        checkWhoWin();
+                        return;
+                    }
+                }
+                if (Player.getPlayer(0).getHealth() < 1 && Player.getPlayer(1).getHealth() < 1) {
+                    fight.setIcon(null);
+                    fight.setForeground(Color.white);
+                    lblfight.setText("플레이어 패배 -----> 클릭해주세요    <-------");
+                    boss_result = true;
+
+                    return;
+
+                } else if (GameMaster.current_boss.getHealth() < 1) {
+                    fight.setIcon(null);
+                    fight.setForeground(Color.white);
+                    lblfight.setText("플레이어 승리 -----> 클릭해주세요    <-------");
+                    boss_result = true;
+                    return;
+                }
+
+
             }
+
+
         });
 
 
     }
 
+    /**
+     * boss의 체력을 star로 바꿔준다.
+     */
     public static void show_stars() {
         for (int i = 10; i > GameMaster.current_boss.getHealth(); i--) {
             boss_health[i].setVisible(false);

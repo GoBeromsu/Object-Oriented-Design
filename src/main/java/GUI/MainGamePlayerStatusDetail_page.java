@@ -20,6 +20,8 @@ import javax.swing.JTextPane;
 
 /**
  * 게임을 진행하면서 바뀌는 플레이어의 현재 스테이터스와 아이템을 보여주는 페이지이다.
+ * @author  Beomsu Ko
+ *
  */
 
 public class MainGamePlayerStatusDetail_page extends JFrame {
@@ -78,8 +80,10 @@ public class MainGamePlayerStatusDetail_page extends JFrame {
         }
     }
 
-
-    MainGamePlayerStatusDetail_page(Player player) {
+    /**
+     * 플레이어의 모든 스테이터스를 보여주는 패널이다.
+     */
+    MainGamePlayerStatusDetail_page(Player player) throws IOException {
         ImagePanel panel = new ImagePanel();
         getContentPane().add(panel);
 
@@ -92,7 +96,8 @@ public class MainGamePlayerStatusDetail_page extends JFrame {
             setBounds(0, 0, 1200, 960);
 
             JPanel movetab = new JPanel();
-            JButton prev = new JButton("prev");
+            JButton prev = new JButton(new ImageIcon(ImageIO.read(MainGamePageController.class.getClassLoader().getResourceAsStream("images/prev.png"))));
+
 
             prev.addActionListener(new ActionListener() {
                 @Override
@@ -107,12 +112,12 @@ public class MainGamePlayerStatusDetail_page extends JFrame {
             prev.setBounds(40, 32, 180, 70);
             movetab.add(prev);
 
-            JButton player1 = new JButton("player1");
+            JButton player1 = new JButton(new ImageIcon(ImageIO.read(MainGamePageController.class.getClassLoader().getResourceAsStream("images/PLAYER1.PNG"))));
             player1.setBounds(297, 40, 160, 54);
             movetab.add(player1);
             player1.addActionListener(new BtnPlayerSwapAction(player, 0));
 
-            JButton player2 = new JButton("player2");
+            JButton player2 = new JButton(new ImageIcon(ImageIO.read(MainGamePageController.class.getClassLoader().getResourceAsStream("images/PLAYER2.PNG"))));
             player2.setBounds(494, 40, 144, 54);
             movetab.add(player2);
 
@@ -236,7 +241,9 @@ public class MainGamePlayerStatusDetail_page extends JFrame {
 
         panel.setVisible(true);
     }
-
+    /**
+     * To paint background
+     */
     class ImagePanel extends JPanel {
 
         public void paintComponent(Graphics g) {
@@ -260,7 +267,12 @@ public class MainGamePlayerStatusDetail_page extends JFrame {
             if (cur_player == player_to_show)
                 return;
 
-            MainGamePlayerStatusDetail_page temp = new MainGamePlayerStatusDetail_page(player_to_show);
+            MainGamePlayerStatusDetail_page temp = null;
+            try {
+                temp = new MainGamePlayerStatusDetail_page(player_to_show);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
             temp.setVisible(true);
             show_player(player_to_show);
             dispose();
@@ -279,7 +291,7 @@ public class MainGamePlayerStatusDetail_page extends JFrame {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         MainGamePlayerStatusDetail_page frame = new MainGamePlayerStatusDetail_page(Player.getPlayer(0));
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

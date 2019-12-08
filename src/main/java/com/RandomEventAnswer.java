@@ -1,7 +1,6 @@
 package com;
 import GUI.Dice_page;
 import GUI.Game_resultPage;
-import GUI.Mainmusic_thread;
 
 
 import java.io.IOException;
@@ -167,10 +166,10 @@ public class RandomEventAnswer {
                 Win_check(player);
                 break;
             case "win":
-                Win_Ans(player);
+                Win_Ans();
                 break;
             case "defeat":
-                Defeat_Ans(player);
+                Defeat_Ans();
                 break;
             case "boss_summon":
                 Boss_summon();
@@ -178,13 +177,15 @@ public class RandomEventAnswer {
             case "re_shop":
                 Return_To_Shop();
                 break;
-            case "Ruin":
-                Ruin();
-                break;
         }
     }
 
-    public static void Ans1_1(Player player)//서브 이벤트 구현에 대한 이야기 필요
+    /**
+     * 이벤트1의 선택지1에 대한 결과를 발생시키는 메소드
+     * @param player
+     * <br>이벤트를 진행하는 플레이어
+     */
+    public static void Ans1_1(Player player)
     {
         DialogPanelController.Clear();
         String message = "당신은 집회에 가보기로 했습니다.";
@@ -194,6 +195,11 @@ public class RandomEventAnswer {
         rando.Rev1_sub1(player);
     }
 
+    /**
+     * 이벤트1의 선택지1에 대한 결과로 발생한 서브 이벤트1의 선택지1에 대한 결과를 발생시키는 메소드
+     * @param player
+     * <br>이벤트를 진행하는 플레이어
+     */
     public static void Ans1_1_1(Player player) {
         DialogPanelController.Clear();
         String message = "\"고통을 받아들여라.\" 교주가 당신에게 낙인을 찍습니다.";
@@ -207,7 +213,11 @@ public class RandomEventAnswer {
         DialogPanelController.show_dialog_answer1(answer1);
         DialogPanelController.show_dialog_answer2(answer2);
     }
-
+    /**
+     * 이벤트1의 선택지1에 대한 결과로 발생한 서브 이벤트1의 선택지2에 대한 결과를 발생시키는 메소드
+     * @param player
+     * <br>이벤트를 진행하는 플레이어
+     */
     public static void Ans1_1_2(Player player) {
         DialogPanelController.Clear();
         String message = "\"때로는 피할 수 없는 고통도 있는 법이지.\" 교주가 당신에게 저주를 날립니다.";
@@ -221,7 +231,11 @@ public class RandomEventAnswer {
         DialogPanelController.show_dialog_answer1(answer1);
         DialogPanelController.show_dialog_answer2(answer2);
     }
-
+    /**
+     * 이벤트1의 선택지2에 대한 결과를 발생시키는 메소드
+     * @param player
+     * <br>이벤트를 진행하는 플레이어
+     */
     public static void Ans1_2(Player player) {
         DialogPanelController.Clear();
         String message = "위험해보입니다. 그런 곳은 가지 않는 것이 상책입니다.";
@@ -231,7 +245,11 @@ public class RandomEventAnswer {
         DialogPanelController.show_dialog_answer1(answer1);
         DialogPanelController.show_dialog_answer2(answer2);
     }
-
+    /**
+     * 이벤트2의 선택지1에 대한 결과를 발생시키는 메소드
+     * @param player
+     * <br>이벤트를 진행하는 플레이어
+     */
     public static void Ans2_1(Player player) {
         DialogPanelController.Clear();
         String message1 = "소리가 닿지 않는 곳으로 성공적으로 피했습니다.";
@@ -247,7 +265,11 @@ public class RandomEventAnswer {
         DialogPanelController.show_dialog_answer1(answer1);
         DialogPanelController.show_dialog_answer2(answer2);
     }
-
+    /**
+     * 이벤트2의 선택지2에 대한 결과를 발생시키는 메소드
+     * @param player
+     * <br>이벤트를 진행하는 플레이어
+     */
     public static void Ans2_2(Player player) throws IOException {
         DialogPanelController.Clear();
         String message = "소리를 내는 기괴한 생물체를 발견했습니다.";
@@ -258,7 +280,11 @@ public class RandomEventAnswer {
         DialogPanelController.show_dialog_answer1(answer1);
         DialogPanelController.show_dialog_answer2(answer2);
     }
-
+    /**
+     * 이벤트3의 선택지1에 대한 결과를 발생시키는 메소드
+     * @param player
+     * <br>이벤트를 진행하는 플레이어
+     */
     public static void Ans3_1(Player player) {
         DialogPanelController.Clear();
         String message1 = "당신은 훌륭하게 적을 꺾었고, 파이트 머니를 얻었습니다.";
@@ -276,7 +302,11 @@ public class RandomEventAnswer {
         DialogPanelController.show_dialog_answer1(answer1);
         DialogPanelController.show_dialog_answer2(answer2);
     }
-
+    /**
+     * 이벤트3의 선택지2에 대한 결과를 발생시키는 메소드
+     * @param player
+     * <br>이벤트를 진행하는 플레이어
+     */
     public static void Ans3_2(Player player) {
         DialogPanelController.Clear();
         String message = "회원들이 당신에게 겁쟁이라고 욕했지만, 당신은 아랑곳하지 않고 자리를 떠났습니다.";
@@ -286,7 +316,11 @@ public class RandomEventAnswer {
         DialogPanelController.show_dialog_answer1(answer1);
         DialogPanelController.show_dialog_answer2(answer2);
     }
-
+    /**
+     * 이벤트4의 선택지1에 대한 결과를 발생시키는 메소드
+     * @param player
+     * <br>이벤트를 진행하는 플레이어
+     */
     public static void Ans4_1(Player player) {
         DialogPanelController.Clear();
         String message1 = "그가 망토 속에서 기이한 물건 하나를 꺼내 당신에게 건네줍니다.";
@@ -305,7 +339,11 @@ public class RandomEventAnswer {
         DialogPanelController.show_dialog_answer1(answer1);
         DialogPanelController.show_dialog_answer2(answer2);
     }
-
+    /**
+     * 이벤트4의 선택지1에 대한 결과를 발생시키는 메소드
+     * @param player
+     * <br>이벤트를 진행하는 플레이어
+     */
     public static void Ans4_2(Player player) {
         DialogPanelController.Clear();
         player.setMental(player.getMental() - 1);
@@ -316,7 +354,11 @@ public class RandomEventAnswer {
         DialogPanelController.show_dialog_answer1(answer1);
         DialogPanelController.show_dialog_answer2(answer2);
     }
-
+    /**
+     * 이벤트4의 선택지3에 대한 결과를 발생시키는 메소드
+     * @param player
+     * <br>이벤트를 진행하는 플레이어
+     */
     public static void Ans4_3(Player player) {
         DialogPanelController.Clear();
         String message = "불길한 사람입니다. 자리에서 떠납니다.";
@@ -326,7 +368,11 @@ public class RandomEventAnswer {
         DialogPanelController.show_dialog_answer1(answer1);
         DialogPanelController.show_dialog_answer2(answer2);
     }
-
+    /**
+     * 이벤트5의 선택지1에 대한 결과를 발생시키는 메소드
+     * @param player
+     * <br>이벤트를 진행하는 플레이어
+     */
     public static void Ans5_1(Player player) {
         DialogPanelController.Clear();
         String message1 = "당신을 가격하는 몽둥이를 피했습니다.";
@@ -347,7 +393,11 @@ public class RandomEventAnswer {
 
 
     }
-
+    /**
+     * 이벤트5의 선택지1에 대한 결과로 발생한 서브 이벤트의 시작을 알리는 메소드
+     * @param player
+     * <br>이벤트를 진행하는 플레이어
+     */
     public static void Ans5_2_Sub1(Player player) {
         DialogPanelController.Clear();
         DialogPanelController.show_dialog("여기가...어디지?");
@@ -356,13 +406,24 @@ public class RandomEventAnswer {
 
     }
 
-    public static void Ans5_2_SubResult(Player player) {
+    /**
+     *이벤트5의 선택지1에 대한 결과로 발생한 서브 이벤트로 새로운 랜덤 이벤트를 실행시키는 메소드
+     * @param player
+     * <br>이벤트를 진행하는 플레이어
+     * @throws IOException
+     */
+    public static void Ans5_2_SubResult(Player player) throws IOException {
         DialogPanelController.Clear();
         int temp = (int) Math.floor(Math.random() * 13);
         ConstantEventHandler.movebyTeleport(player, TileType.values()[temp]);
         ConstantEventHandler.generateRandomEvent(player);
     }
 
+    /**
+     * 이벤트6의 선택지1에 대한 결과를 발생시키는 메소드
+     * @param player
+     * <br>이벤트를 진행하는 플레이어
+     */
     public static void Ans6_1(Player player) {
         DialogPanelController.Clear();
         String message1 = "조각상 안에 숨겨져 있던 주문을 해제하는 것을 성공했습니다. 알 수 없는 힘이 온 몸을 휘감습니다.";
@@ -380,7 +441,11 @@ public class RandomEventAnswer {
         DialogPanelController.show_dialog_answer1(answer1);
         DialogPanelController.show_dialog_answer2(answer2);
     }
-
+    /**
+     * 이벤트6의 선택지2에 대한 결과를 발생시키는 메소드
+     * @param player
+     * <br>이벤트를 진행하는 플레이어
+     */
     public static void Ans6_2(Player player) {
         DialogPanelController.Clear();
         String message = "불길한 소문입니다. 무시합니다.";
@@ -392,8 +457,12 @@ public class RandomEventAnswer {
     }
 
 
-    public static void Ans7_1(Player player) {
-        // TODO : 디버깅 필요 !! 실패시 플레이어의 위치가 임의로 변경되는데 이 변경이 맵에 반영이 안된다.
+    /**
+     * 이벤트7의 선택지1에 대한 결과를 발생시키는 메소드
+     * @param player
+     * <br>이벤트를 진행하는 플레이어
+     */
+    public static void Ans7_1(Player player) throws IOException {
         DialogPanelController.Clear();
         String message1 = "상자를 열고 신비로운 힘이 느껴지는 물건을 얻었습니다.";
         String message2 = "상자를 여는 것을 경비원에게 들켰습니다.";
@@ -413,7 +482,11 @@ public class RandomEventAnswer {
         DialogPanelController.show_dialog_answer1(answer1);
         DialogPanelController.show_dialog_answer2(answer2);
     }
-
+    /**
+     * 이벤트7의 선택지2에 대한 결과를 발생시키는 메소드
+     * @param player
+     * <br>이벤트를 진행하는 플레이어
+     */
     public static void Ans7_2(Player player) {
         DialogPanelController.Clear();
         String message = "호기심이 고양이를 죽이는 법입니다.";
@@ -423,7 +496,11 @@ public class RandomEventAnswer {
         DialogPanelController.show_dialog_answer1(answer1);
         DialogPanelController.show_dialog_answer2(answer2);
     }
-
+    /**
+     * 이벤트8의 선택지1에 대한 결과를 발생시키는 메소드
+     * @param player
+     * <br>이벤트를 진행하는 플레이어
+     */
     public static void Ans8_1(Player player) {
         DialogPanelController.Clear();
         String message1 = "이야기를 제보하고 5$를 받습니다.";
@@ -439,7 +516,11 @@ public class RandomEventAnswer {
         DialogPanelController.show_dialog_answer1(answer1);
         DialogPanelController.show_dialog_answer2(answer2);
     }
-
+    /**
+     * 이벤트8의 선택지2에 대한 결과를 발생시키는 메소드
+     * @param player
+     * <br>이벤트를 진행하는 플레이어
+     */
     public static void Ans8_2(Player player) {
         DialogPanelController.Clear();
         String message = "이런 이야기는 사람들에게 알려져서는 안됩니다. 제보하지 않습니다.";
@@ -449,7 +530,11 @@ public class RandomEventAnswer {
         DialogPanelController.show_dialog_answer1(answer1);
         DialogPanelController.show_dialog_answer2(answer2);
     }
-
+    /**
+     * 이벤트9의 선택지1에 대한 결과를 발생시키는 메소드
+     * @param player
+     * <br>이벤트를 진행하는 플레이어
+     */
     public static void Ans9_1(Player player) {
         DialogPanelController.Clear();
         String message1 = "당신은 이제 자랑스러운 파이트 클럽의 회원입니다.";
@@ -472,7 +557,11 @@ public class RandomEventAnswer {
         DialogPanelController.show_dialog_answer1(answer1);
         DialogPanelController.show_dialog_answer2(answer2);
     }
-
+    /**
+     * 이벤트9의 선택지2에 대한 결과를 발생시키는 메소드
+     * @param player
+     * <br>이벤트를 진행하는 플레이어
+     */
     public static void Ans9_2(Player player) {
         DialogPanelController.Clear();
         String message1 = "그런 조직에 쓸 시간도, 돈도 없습니다.";
@@ -488,7 +577,11 @@ public class RandomEventAnswer {
         DialogPanelController.show_dialog_answer1(answer1);
         DialogPanelController.show_dialog_answer2(answer2);
     }
-
+    /**
+     * 이벤트10의 선택지1에 대한 결과를 발생시키는 메소드
+     * @param player
+     * <br>이벤트를 진행하는 플레이어
+     */
     public static void Ans10_1(Player player) {
         DialogPanelController.Clear();
         String message1 = "그를 향해 뛰어올라 그를 붙잡는 순간 사라집니다. 신비로운 힘이 당신을 휘감습니다.";
@@ -509,7 +602,11 @@ public class RandomEventAnswer {
         DialogPanelController.show_dialog_answer1(answer1);
         DialogPanelController.show_dialog_answer2(answer2);
     }
-
+    /**
+     * 이벤트10의 선택지2에 대한 결과를 발생시키는 메소드
+     * @param player
+     * <br>이벤트를 진행하는 플레이어
+     */
     public static void Ans10_2(Player player) {
         DialogPanelController.Clear();
         String message = "정말 그는 당신이 모르는 사람일까요?";
@@ -519,7 +616,11 @@ public class RandomEventAnswer {
         DialogPanelController.show_dialog_answer1(answer1);
         DialogPanelController.show_dialog_answer2(answer2);
     }
-
+    /**
+     * 이벤트11의 선택지1에 대한 결과를 발생시키는 메소드
+     * @param player
+     * <br>이벤트를 진행하는 플레이어
+     */
     public static void Ans11_1(Player player) {
         DialogPanelController.Clear();
         String message = "그의 연주를 듣고 있으니 마음 한구석이 치유되는 것 같습니다.";
@@ -529,7 +630,11 @@ public class RandomEventAnswer {
         DialogPanelController.show_dialog_answer1(answer1);
         DialogPanelController.show_dialog_answer2(answer2);
     }
-
+    /**
+     * 이벤트12의 선택지1에 대한 결과를 발생시키는 메소드
+     * @param player
+     * <br>이벤트를 진행하는 플레이어
+     */
     public static void Ans12_1(Player player) {
         DialogPanelController.Clear();
         String message1 = "\"거래 고맙네.\" 노인은 갑자기 사라졌고, 당신은 주머니가 허전해짐과 동시에 손에 정체모를 램프가 들려있는 것을 발견합니다.";
@@ -547,7 +652,11 @@ public class RandomEventAnswer {
         DialogPanelController.show_dialog_answer1(answer1);
         DialogPanelController.show_dialog_answer2(answer2);
     }
-
+    /**
+     * 이벤트12의 선택지2에 대한 결과를 발생시키는 메소드
+     * @param player
+     * <br>이벤트를 진행하는 플레이어
+     */
     public static void Ans12_2(Player player) {
         DialogPanelController.Clear();
         String message = "\"존중할줄 아는 자세가 필요하겠군.\" 노인이 갑자기 사라지고 당신은 현기증을 느낍니다.";
@@ -558,7 +667,11 @@ public class RandomEventAnswer {
         DialogPanelController.show_dialog_answer1(answer1);
         DialogPanelController.show_dialog_answer2(answer2);
     }
-
+    /**
+     * 이벤트13의 선택지1에 대한 결과를 발생시키는 메소드
+     * @param player
+     * <br>이벤트를 진행하는 플레이어
+     */
     public static void Ans13_1(Player player) {
         DialogPanelController.Clear();
         String message = "공포가 당신을 휘감습니다.";
@@ -569,7 +682,11 @@ public class RandomEventAnswer {
         DialogPanelController.show_dialog_answer1(answer1);
         DialogPanelController.show_dialog_answer2(answer2);
     }
-
+    /**
+     * 이벤트14의 선택지1에 대한 결과를 발생시키는 메소드
+     * @param player
+     * <br>이벤트를 진행하는 플레이어
+     */
     public static void Ans14_1(Player player) {
         DialogPanelController.Clear();
         String message1 = "\"안타깝네, 뒤...\" 당신은 날렵한 손놀림으로 도박사가 다른 동전을 빼돌리는 것을 막습니다. \"지만 참가상품도 있으니까!\"";
@@ -586,7 +703,11 @@ public class RandomEventAnswer {
         DialogPanelController.show_dialog_answer1(answer1);
         DialogPanelController.show_dialog_answer2(answer2);
     }
-
+    /**
+     * 이벤트14의 선택지2에 대한 결과를 발생시키는 메소드
+     * @param player
+     * <br>이벤트를 진행하는 플레이어
+     */
     public static void Ans14_2(Player player) {
         DialogPanelController.Clear();
         String message1 = "\"안타깝네, 앞...\" 당신은 날렵한 손놀림으로 도박사가 다른 동전을 빼돌리는 것을 막습니다. \"이지만 참가상품도 있으니까!\"";
@@ -603,7 +724,11 @@ public class RandomEventAnswer {
         DialogPanelController.show_dialog_answer1(answer1);
         DialogPanelController.show_dialog_answer2(answer2);
     }
-
+    /**
+     * 이벤트15의 선택지1에 대한 결과를 발생시키는 메소드
+     * @param player
+     * <br>이벤트를 진행하는 플레이어
+     */
     public static void Ans15_1(Player player) {
         DialogPanelController.Clear();
         String message = "당신은 오싹한 기분을 느낍니다.";
@@ -614,7 +739,11 @@ public class RandomEventAnswer {
         DialogPanelController.show_dialog_answer1(answer1);
         DialogPanelController.show_dialog_answer2(answer2);
     }
-
+    /**
+     * 이벤트16의 선택지1에 대한 결과를 발생시키는 메소드
+     * @param player
+     * <br>이벤트를 진행하는 플레이어
+     */
     public static void Ans16_1(Player player) {
         DialogPanelController.Clear();
         String message = "정신이 아득해지는 것을 느꼈지만, 단서 또한 얻었습니다.";
@@ -627,7 +756,11 @@ public class RandomEventAnswer {
         DialogPanelController.show_dialog_answer1(answer1);
         DialogPanelController.show_dialog_answer2(answer2);
     }
-
+    /**
+     * 이벤트17의 선택지1에 대한 결과를 발생시키는 메소드
+     * @param player
+     * <br>이벤트를 진행하는 플레이어
+     */
     public static void Ans17_1(Player player) {
         DialogPanelController.Clear();
         String message = "유령선이라...철 지난 농담같군요.";
@@ -643,7 +776,11 @@ public class RandomEventAnswer {
         DialogPanelController.show_dialog_answer1(answer1);
         DialogPanelController.show_dialog_answer2(answer2);
     }
-
+    /**
+     * 이벤트18의 선택지1에 대한 결과를 발생시키는 메소드
+     * @param player
+     * <br>이벤트를 진행하는 플레이어
+     */
     public static void Ans18_1(Player player) {
         DialogPanelController.Clear();
         String message1 = "당신은 검은 정장의 사나이의 안으로 빨려들어가는 것을 느낍니다...";
@@ -672,7 +809,11 @@ public class RandomEventAnswer {
         DialogPanelController.show_dialog_answer1(answer1);
         DialogPanelController.show_dialog_answer2(answer2);
     }
-
+    /**
+     * 이벤트18의 선택지2에 대한 결과를 발생시키는 메소드
+     * @param player
+     * <br>이벤트를 진행하는 플레이어
+     */
     public static void Ans18_2(Player player) {
         DialogPanelController.Clear();
         String message = "\"안타깝군요. 다음에는 거래에 응해주시길.\"";
@@ -683,7 +824,11 @@ public class RandomEventAnswer {
         DialogPanelController.show_dialog_answer2(answer2);
     }
 
-
+    /**
+     * 이벤트19의 선택지1에 대한 결과를 발생시키는 메소드
+     * @param player
+     * <br>이벤트를 진행하는 플레이어
+     */
     public static void Ans19_1(Player player) {
         DialogPanelController.Clear();
         String message = "이는 사람의 짓이 아닙니다. 괴물이 빈민가에 풀려난 것 같습니다.";
@@ -700,7 +845,11 @@ public class RandomEventAnswer {
         DialogPanelController.show_dialog_answer2(answer2);
     }
 
-
+    /**
+     * 이벤트20의 선택지1에 대한 결과를 발생시키는 메소드
+     * @param player
+     * <br>이벤트를 진행하는 플레이어
+     */
     public static void Ans20_1(Player player) {
         DialogPanelController.Clear();
         String message = "써도 괜찮은 물건일까요?";
@@ -711,7 +860,11 @@ public class RandomEventAnswer {
         DialogPanelController.show_dialog_answer1(answer1);
         DialogPanelController.show_dialog_answer2(answer2);
     }
-
+    /**
+     * 이벤트21의 선택지1에 대한 결과를 발생시키는 메소드
+     * @param player
+     * <br>이벤트를 진행하는 플레이어
+     */
     public static void Ans21_1(Player player) {
         DialogPanelController.Clear();
         String message1 = "역시나 함정이었지만, 당신의 뛰어난 정신력과 지식이 이를 막았습니다. 이제 뭘하냐고요? 스위트룸을 즐겨야죠.";
@@ -731,7 +884,11 @@ public class RandomEventAnswer {
         DialogPanelController.show_dialog_answer1(answer1);
         DialogPanelController.show_dialog_answer2(answer2);
     }
-
+    /**
+     * 이벤트21의 선택지2에 대한 결과를 발생시키는 메소드
+     * @param player
+     * <br>이벤트를 진행하는 플레이어
+     */
     public static void Ans21_2(Player player) {
         DialogPanelController.Clear();
         String message = "함정에 제 발로 입장하는 바보는 없겠죠?";
@@ -742,7 +899,9 @@ public class RandomEventAnswer {
         DialogPanelController.show_dialog_answer1(answer1);
         DialogPanelController.show_dialog_answer2(answer2);
     }
-
+    /**
+     * 계속 버튼을 눌렀을 때 이에 해당하는 결과를 발생시키는 메소드
+     */
     public static void ContinueDialog() {
         if (Player.getCurrentPlayer().getEnergy() < 1) {
             DialogPanelController.Clear();
@@ -756,11 +915,16 @@ public class RandomEventAnswer {
         }
     }
 
+    /**
+     * 턴 종료 버튼을 눌렀을 때 이에 해당하는 결과를 발생시키는 메소드
+     */
     public static void TurnEnd() {
         DialogPanelController.Clear();
         GameMaster.turnEnd();
     }
-
+    /**
+     * 병원에서 치료를 받기로 했을 때 발생하는 메소드
+     */
     public static void hospital_Ans1(Player player) {
         DialogPanelController.Clear();
         String message = "치료를 받았습니다.";
@@ -771,7 +935,9 @@ public class RandomEventAnswer {
         DialogPanelController.show_dialog_answer1(answer1);
         DialogPanelController.show_dialog_answer2(answer2);
     }
-
+    /**
+     * 병원에서 치료를 받지 않기로 했을 때 발생하는 메소드
+     */
     public static void hospital_Ans2(Player player) {
         DialogPanelController.Clear();
         String message = "병원을 지나칩니다.";
@@ -781,7 +947,9 @@ public class RandomEventAnswer {
         DialogPanelController.show_dialog_answer1(answer1);
         DialogPanelController.show_dialog_answer2(answer2);
     }
-
+    /**
+     * 정신병원에서 치료를 받기로 했을 때 발생하는 메소드
+     */
     public static void mospital_Ans1(Player player) {
         DialogPanelController.Clear();
         String message = "치료를 받았습니다.";
@@ -792,7 +960,9 @@ public class RandomEventAnswer {
         DialogPanelController.show_dialog_answer1(answer1);
         DialogPanelController.show_dialog_answer2(answer2);
     }
-
+    /**
+     * 정신병원에서 치료를 받지 않기로 했을 때 발생하는 메소드
+     */
     public static void mospital_Ans2(Player player) {
         DialogPanelController.Clear();
         String message = "정신병원은 방문 안 하는게 좋겠죠.";
@@ -803,6 +973,11 @@ public class RandomEventAnswer {
         DialogPanelController.show_dialog_answer2(answer2);
     }
 
+    /**
+     * 즉사 체크를 실행하는 메소드
+     * @param player
+     * 해당 플레이어
+     */
     public static void death_Ans(Player player) {
         if (player.getStatus() == 2)
             Win_check(player);
@@ -837,6 +1012,11 @@ public class RandomEventAnswer {
         }
     }
 
+    /**
+     * 턴 종료 단계 중 승리 조건을 체크하는 메소드
+     * @param player
+     * <br>턴을 마치는 플레이어
+     */
     public static void Win_check(Player player) {
         if (GameMaster.check_num_of_token_for_win()) {
             DialogPanelController.Clear();
@@ -849,7 +1029,10 @@ public class RandomEventAnswer {
         }
     }
 
-    public static void Win_Ans(Player player) {
+    /**
+     *  승리 조건을 만족하여 승리 창을 출력하는 메소드
+     */
+    public static void Win_Ans() {
         //승리 화면 출력
         Game_resultPage game_result_page = new Game_resultPage("win");
         game_result_page.setVisible(true);
@@ -857,6 +1040,11 @@ public class RandomEventAnswer {
         Mainmusic_thread.thread.stop();
     }
 
+    /**
+     * 턴 종료 단계 중 패배 조건을 체크하는 메소드
+     * @param player
+     * <br>턴을 마치는 플레이어
+     */
     public static void Defeat(Player player) {
         if (GameMaster.check_player_status_for_lost()) {
             DialogPanelController.Clear();
@@ -869,21 +1057,28 @@ public class RandomEventAnswer {
         }
     }
 
-    public static void Defeat_Ans(Player player) {
+    /**
+     * 패배 조건을 만족하여 패배 창을 출력하는 메소드
+     */
+    public static void Defeat_Ans() {
         //패배 화면 출력
         Game_resultPage game_result_page = new Game_resultPage("defeat");
         game_result_page.setVisible(true);
         MainGamePageController.maingame_page.dispose();
         Mainmusic_thread.thread.stop();
     }
-
+    /**
+     * 턴 종료 단계 중 보스 소환 조건을 체크하는 메소드
+     * @param player
+     * <br>턴을 마치는 플레이어
+     */
     public static void checkBoss_Summon_condition(Player player) {
         if (GameMaster.check_num_of_monsters_portals_for_boss()) {
             DialogPanelController.Clear();
             if(GameMaster.current_boss.getType()==BossType.AZATHOTH)
             {
                 DialogPanelController.show_dialog("아자토스가 잠에서 깨어납니다. 이에 저항할 수 있는 방법은 없습니다.");
-                Answer answer1 = new Answer("멸망을 받아들인다", "Ruin");
+                Answer answer1 = new Answer("멸망을 받아들인다", "defeat");
                 DialogPanelController.show_dialog_answer1(answer1);
             }
             else
@@ -901,18 +1096,20 @@ public class RandomEventAnswer {
         }
     }
 
-    public static void Ruin()
-    {
-        Game_resultPage result;
-        MainGamePageController.maingame_page.dispose();
-        result = new Game_resultPage("defeat");
-        result.setVisible(true);
-    }
 
-    public static void Boss_summon() {
+    /**
+     * 보스 소환 조건을 만족하여 보스를 소환하는 메소드
+     */
+    public static void Boss_summon() throws IOException {
         Fight_boss_controller fight_boss_page = new Fight_boss_controller();
+        MainGamePageController.maingame_page.dispose();
     }
 
+    /**
+     * 플레이어1, 2 모두 턴이 끝나서 다음 턴으로 넘어가는 경우 실행하는 메소드
+     * @param player
+     * <br>턴을 종료하는 플레이어
+     */
     public static void Next_Turn(Player player) {
         MainGamePageController.show_players();
         if (GameMaster.turn % 3 == 0) {
@@ -941,7 +1138,11 @@ public class RandomEventAnswer {
         else
             DialogPanelController.generateGeneralDialogues();
     }
-
+    /**
+     * 현재 플레이어는 턴을 종료하지만 아직 다른 플레이어가 턴을 끝내지 않은 경우 실행되는 메소드
+     * @param player
+     * <br>턴을 종료하는 플레이어
+     */
     public static void Next_Player(Player player) {
         MainGamePageController.show_players();
         Player.toggleCurrentPlayer();
@@ -955,6 +1156,9 @@ public class RandomEventAnswer {
             DialogPanelController.generateGeneralDialogues();
     }
 
+    /**
+     * 상점에서 물건을 사려고 했으나 돈이 충분치 않은 경우 발생하는 메소드
+     */
     public static void Not_Enough_Money() {
         DialogPanelController.Clear();
         String message = "돈이 충분하지 않습니다.";
@@ -969,6 +1173,9 @@ public class RandomEventAnswer {
 
     }
 
+    /**
+     * 상점에서 물건을 구입한 경우 발생하는 메소드
+     */
     public static void Purchase_Complete() {
         DialogPanelController.Clear();
         String message = "아이템을 구입했습니다.";
@@ -982,6 +1189,9 @@ public class RandomEventAnswer {
         DialogPanelController.show_dialog_answer3(answer3);
     }
 
+    /**
+     * 상점에서 물건을 구입한 후 "계속해서 구매"를 누른 경우 발생하는 메소드
+     */
     public static void Return_To_Shop() {
         DialogPanelController.Clear();
         ConstantEventHandler.shop_maintain_switch = true;

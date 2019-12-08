@@ -2,6 +2,7 @@ package GUI;
 
 import com.GameMaster;
 import com.MainGamePageController;
+import com.Mainmusic_thread;
 import com.Player;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,6 +10,8 @@ import lombok.Setter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
@@ -20,6 +23,7 @@ import javax.swing.JPanel;
 
 
 /**
+ * @author Beomsu Ko
  * 각각의 플레이어들의 초기 스탯 분배하는 페이지이다.
  */
 public class SetStatus_page extends JFrame {
@@ -40,6 +44,14 @@ public class SetStatus_page extends JFrame {
     Image status_img = new ImageIcon(ImageIO.read(this.getClass().getClassLoader().getResourceAsStream("images/SELECTOR.PNG"))).getImage();
 
     SetStatus_page() throws IOException {
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                super.windowClosing(e);
+                System.exit(0);
+                Mainmusic_thread.thread.stop();
+            }
+        });
         getContentPane().add(imagePanel);
         imagePanel.setLayout(null);
         //player 1 , 2  이름 및 이미지 변환
@@ -233,6 +245,9 @@ public class SetStatus_page extends JFrame {
         }
 
     }
+    /**
+     * To paint background
+     */
     class ImagePanel extends JPanel {
 
         public void paintComponent(Graphics g) {
@@ -240,6 +255,9 @@ public class SetStatus_page extends JFrame {
             g.drawImage(status_background, 0, 0, 1200, 960, this);
         }
     }
+    /**
+     * To paint status Paenl
+     */
     class statusImagePanel extends JPanel {
 
         public void paintComponent(Graphics g) {

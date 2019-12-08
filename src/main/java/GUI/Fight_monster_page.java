@@ -9,17 +9,21 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.IOException;
 
 
 /**
- * boss나 monster와의 전투를 나타내는 페이지이다.
+ * monster와의 전투를 나타내는 페이지이다.
+ * @author Beomsu Ko
  */
 
 @Getter
 @Setter
 public class Fight_monster_page extends JFrame {
-
+     boolean monster_result = false;
+    JLabel lblfight;
     static Fight_monster_page frm_fight_monster_page;
     MonsterPanel monsterPanel;
     PlayerPanel player_panel;
@@ -27,7 +31,15 @@ public class Fight_monster_page extends JFrame {
     public int turn = 0;
     static JButton fight;
 
-    public Fight_monster_page(Monster monster) throws IOException {
+    public Fight_monster_page(Monster monster) throws IOException  {
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                super.windowClosing(e);
+                System.exit(0);
+                Mainmusic_thread.thread.stop();
+            }
+        });
         frm_fight_monster_page = this;
         Mainmusic_thread.thread.close();
         setUndecorated(true);
@@ -47,59 +59,96 @@ public class Fight_monster_page extends JFrame {
         monsterPanel = new MonsterPanel(this.monster);
         getContentPane().add(monsterPanel);
 
-        fight = new JButton(new ImageIcon(ImageIO.read(this.getClass().getClassLoader().getResourceAsStream("images/fight_start.png"))));
+
+        lblfight = new JLabel("");
+        getContentPane().add(lblfight);
+        lblfight.setBounds(650, 500, 600, 150);
+        Image fight_btn = ImageIO.read(this.getClass().getClassLoader().getResourceAsStream("images/fight_start.png"));
+        fight_btn.getScaledInstance(500,300,Image.SCALE_SMOOTH);
+        fight = new JButton(new ImageIcon(fight_btn));
         fight.setFocusPainted(false);
         fight.setContentAreaFilled(false);
         fight.setBorderPainted(false);
         getContentPane().add(fight);
-        fight.setBounds(400, 600, 709, 300);
+
+
+        fight.setBounds(400, 600, 500, 300);
         fight.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (fight.getText() == "플레이어 패배") {
-                    MainGamePageController.show_players();
-                    Fight_monster_page.frm_fight_monster_page.dispose();
-                    DialogPanelController.Clear();
-                    DialogPanelController.generateGeneralDialogues();
-                    Mainmusic_thread.thread.close();
-                    Mainmusic_thread music_thread = new Mainmusic_thread(this.getClass().getClassLoader().getResourceAsStream("music/Main.mp3"), true);
-                    music_thread.start();
-                    return;
-                } else if (fight.getText() == "몬스터 패배") {
-                    Map.tiles[Player.getCurrentPlayer().getPos().ordinal()].setSummoned_monster(null);
-                    MainGamePageController.show_monsters();
-                    Fight_monster_page.frm_fight_monster_page.dispose();
-                    DialogPanelController.Clear();
-                    DialogPanelController.generateGeneralDialogues();
-                    Mainmusic_thread.thread.close();
-                    Mainmusic_thread music_thread = new Mainmusic_thread(this.getClass().getClassLoader().getResourceAsStream("music/Main.mp3"), true);
-                    music_thread.start();
-                    return;
+
+                if (monster_result == true) {
+                    if (lblfight.getText() == "플레이어 패배") {
+
+                        MainGamePageController.show_players();
+                        Fight_monster_page.frm_fight_monster_page.dispose();
+                        DialogPanelController.Clear(    );
+                        DialogPanelController.generateGeneralDialogues();
+                        Mainmusic_thread.thread.close();
+                        Mainmusic_thread music_thread = new Mainmusic_thread(this.getClass().getClassLoader().getResourceAsStream("music/Main.mp3"), true);
+                        music_thread.start();
+
+                        return;
+                    } else if (lblfight.getText() == "몬스터 패배") {
+
+                        Map.tiles[Player.getCurrentPlayer().getPos().ordinal()].setSummoned_monster(null);
+                        MainGamePageController.show_monsters();
+                        Fight_monster_page.frm_fight_monster_page.dispose();
+                        DialogPanelController.Clear();
+                        DialogPanelController.generateGeneralDialogues();
+                        Mainmusic_thread.thread.close();
+                        Mainmusic_thread music_thread = new Mainmusic_thread(this.getClass().getClassLoader().getResourceAsStream("music/Main.mp3"), true);
+                        music_thread.start();
+                        int player_money = Player.getCurrentPlayer().getMoney();
+                        Player.getCurrentPlayer().setMoney(player_money+monster.getMonster_result());
+                        return;
+                    }
+
                 }
+
                 if (turn % 2 == 0) {
-                    fight.setText("몬스터의 공격");
-                    attackedMonsterByPlayer();
+                    lblfight.setText("몬스터의 공격");
+                    try {
+                        attackedMonsterByPlayer();
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
                     System.out.println(Player.getCurrentPlayer());
                     turn++;
                 } else {
-                    fight.setText("플레이어의 공격");
-                    attackedPlayerByMonster();
+                    lblfight.setText("플레이어의 공격");
+                    try {
+                        attackedPlayerByMonster();
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
                     turn++;
                 }
+
+                //monster fight 결과 출력
                 if (Player.getCurrentPlayer().getHealth() < 1 || Player.getCurrentPlayer().getMental() < 1) {
-                    fight.setText("플레이어 패배");
+                    fight.setIcon(null);
+                    lblfight.setText("플레이어 패배");
+                    fight.setText("다음 게임 진행을 위해 ----->    여기     <------------를 눌러주세요");
+                    monster_result = true;
                     return;
                 }
                 if (monster.getHealth() < 1) {
-                    fight.setText("몬스터 패배");
+                    fight.setIcon(null);
+                    lblfight.setText("몬스터 패배");
+                    fight.setText("다음 게임 진행을 위해 ----->      여기         <-------------를 눌러주세요");
+                   monster_result = true;
+
                     return;
                 }
             }
         });
         setVisible(true);
     }
-
-    private void attackedPlayerByMonster() {
+    /**
+     * 몬스터의 공격 실행 메소드이다.
+     */
+    private void attackedPlayerByMonster() throws IOException {
         System.out.println("몬스터가 플레이어 공격했음");
         int bonus_val = 0;
         if (GameMaster.current_boss.getType() == BossType.CHUTHULU) {
@@ -117,8 +166,10 @@ public class Fight_monster_page extends JFrame {
             }
         }
     }
-
-    private void attackedMonsterByPlayer() {
+    /**
+     * 플레이어의 공격 실행 메소드
+     */
+    private void attackedMonsterByPlayer() throws IOException {
         System.out.println("플레이어가 공격했음");
         int bonus_val = 0;
         if (GameMaster.current_boss.getType() == BossType.CHUTHULU) {
@@ -130,7 +181,9 @@ public class Fight_monster_page extends JFrame {
             Fight_monster_page.frm_fight_monster_page.monsterPanel.getMonster_health_txt().setText(Integer.toString(monster.getHealth()));
         }
     }
-
+    /**
+     * 현재 싸우고 있는 플레이어의 정보를 출력하는 패널
+     */
     @Getter
     public class PlayerPanel extends JPanel {
 

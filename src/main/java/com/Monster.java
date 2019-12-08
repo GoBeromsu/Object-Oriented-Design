@@ -5,7 +5,7 @@ import lombok.Data;
 /**
  * 몬스터의 기본 속성들을 정의하는 클래스
  *
- * @author Chanho Park, Se-ok Jeon
+ * @author Chanho Park, Se-ok Jeon,Beomsu Ko
  */
 @Data
 public class Monster {

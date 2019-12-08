@@ -9,6 +9,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 
+/**
+ * @author Se-Ok Jeon, Beomsu Ko
+ */
 @Getter
 @Setter
 public class DialogPanel extends JPanel {
@@ -26,11 +29,14 @@ public class DialogPanel extends JPanel {
     }
 
     JLabel lb_just_text = new JLabel("Mac morning");
-    JButton selectbtn3 = new JButton("Example3");
-    JButton selectbtn2 = new JButton("Example2");
-    JButton selectbtn1 = new JButton("Example1");
+    JButton selectbtn3 = new JButton("",new ImageIcon(ImageIO.read(this.getClass().getClassLoader().getResourceAsStream("images/SELECTOR.PNG"))));
+    JButton selectbtn2 = new JButton("",new ImageIcon(ImageIO.read(this.getClass().getClassLoader().getResourceAsStream("images/SELECTOR.PNG"))));
+    JButton selectbtn1 = new JButton("",new ImageIcon(ImageIO.read(this.getClass().getClassLoader().getResourceAsStream("images/SELECTOR.PNG"))));
 
-    public DialogPanel() {
+
+
+
+    public DialogPanel() throws IOException {
       setLayout(null);
 //        add(turnEnd);
 //        setLayout(new GridLayout(4, 1, 0, 20));
@@ -46,6 +52,9 @@ public class DialogPanel extends JPanel {
         add(selectbtn3);
 
     }
+    /**
+     * @author Se-Ok Jeon, Beomsu Ko
+     */
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.drawImage(dialog, 0, 0, 569, 430, this);
