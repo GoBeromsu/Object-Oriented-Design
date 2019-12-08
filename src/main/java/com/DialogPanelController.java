@@ -84,7 +84,7 @@ public class DialogPanelController {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                if (Player.getCurrentPlayer().getEnergy() < 1) {
+                if (Player.getCurrentPlayer().getEnergy() < 1||Player.getCurrentPlayer().getHealth()<=0||Player.getCurrentPlayer().getMental()<=0) {
                     Clear();
                     DialogPanelController.show_dialog("사용 가능한 행동치가 없습니다.");
 
@@ -101,7 +101,7 @@ public class DialogPanelController {
         selectbtn2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (Player.getCurrentPlayer().getEnergy() < 1) {
+                if (Player.getCurrentPlayer().getEnergy() < 1||Player.getCurrentPlayer().getHealth()<=0||Player.getCurrentPlayer().getMental()<=0) {
                     Clear();
                     DialogPanelController.show_dialog("사용 가능한 행동치가 없습니다.");
                     DialogPanelController.show_dialog_answer1(new Answer("1. 턴 종료", "turnEnd"));
