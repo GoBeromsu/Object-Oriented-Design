@@ -28,7 +28,6 @@ public class ConstantEventHandler
      */
     static boolean shop_maintain_switch=false;
 
-    /** @Deprecated 아마 안쓰이니까 지워야 할듯?*/
     public static int fight_remain=0;
 
     /**

@@ -5,11 +5,16 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.imageio.ImageIO;
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import java.awt.Graphics;
+import java.awt.Image;
 import java.io.IOException;
 
 /**
+ * 메인게임페이지에서 보이는 다이얼로그 창을 다루기 위한 클래스
  * @author Se-Ok Jeon, Beomsu Ko
  */
 @Getter
