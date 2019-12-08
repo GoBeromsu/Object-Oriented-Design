@@ -79,7 +79,7 @@ public class Fight_monster_page extends JFrame {
 
                 if (monster_result == true) {
                     if (lblfight.getText() == "플레이어 패배") {
-
+                        ConstantEventHandler.fight_remain--;
                         MainGamePageController.show_players();
                         Fight_monster_page.frm_fight_monster_page.dispose();
                         DialogPanelController.Clear(    );
@@ -90,18 +90,26 @@ public class Fight_monster_page extends JFrame {
 
                         return;
                     } else if (lblfight.getText() == "몬스터 패배") {
-
+                        ConstantEventHandler.fight_remain--;
                         Map.tiles[Player.getCurrentPlayer().getPos().ordinal()].setSummoned_monster(null);
                         MainGamePageController.show_monsters();
                         Fight_monster_page.frm_fight_monster_page.dispose();
-                        DialogPanelController.Clear();
+                        if(ConstantEventHandler.fight_remain==1) {
+                            try {
+                                ConstantEventHandler.generateFight(MonsterType.values()[(int) Math.floor(Math.random() * 5)]);
+                            } catch (IOException ex) {
+                                ex.printStackTrace();
+                            }
+                        }
+                        else
+                        {DialogPanelController.Clear();
                         DialogPanelController.generateGeneralDialogues();
                         Mainmusic_thread.thread.close();
                         Mainmusic_thread music_thread = new Mainmusic_thread(this.getClass().getClassLoader().getResourceAsStream("music/Main.mp3"), true);
                         music_thread.start();
                         int player_money = Player.getCurrentPlayer().getMoney();
                         Player.getCurrentPlayer().setMoney(player_money+monster.getMonster_result());
-                        return;
+                        return;}
                     }
 
                 }
