@@ -1,3 +1,8 @@
-# Hi 다들 파이팅들하게!!
+# [2019 f Object-Oriented-Design] THULU THULU
 
-고쳐고쳐~
+크툴루 신화 기반 턴제 로그라이크 게임으로, swing으로 제작됨
+
+개발자
+- 고범수 : GUI, ...
+- 박찬호 : Event Controller & rsrc
+- 전세옥 : Model & Model_View Controller
