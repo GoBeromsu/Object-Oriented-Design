@@ -94,7 +94,7 @@ public class ConstantEventHandler
         }
         else if(Map.getMonsterAt(tile) != null)
         {
-            fight_remain=1;
+            fight_remain=0;
             ConstantEventHandler.generateFight(Map.getMonsterAt(tile).getMonster_type());
         }
         else if(tile == TileType.HOSPITAL)
