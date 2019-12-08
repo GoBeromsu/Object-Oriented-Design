@@ -142,14 +142,17 @@ public class Fight_monster_page extends JFrame {
                     return;
                 }
                 if (monster.getHealth() < 1) {
-                    fight.setIcon(null);
-                    lblfight.setText("몬스터 패배");
-                    fight.setText("다음 게임 진행을 위해 ----->      여기         <-------------를 눌러주세요");
-                   monster_result = true;
-
-                    return;
+                    if(ConstantEventHandler.fight_remain<1)
+                    {
+                        fight.setIcon(null);
+                    }
+                        lblfight.setText("몬스터 패배");
+                        fight.setText("다음 게임 진행을 위해 ----->      여기         <-------------를 눌러주세요");
+                        monster_result = true;
+                        return;
                 }
-            }
+
+                }
         });
         setVisible(true);
     }
