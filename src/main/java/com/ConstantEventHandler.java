@@ -84,7 +84,7 @@ public class ConstantEventHandler
             fight_remain=2;
             generateFight(MonsterType.values()[(int) Math.floor(Math.random() * 5)]);
 
-            if(player.getHealth() > 0)
+            if(player.getHealth() > 0&&player.getMental()>0)
             {
                 GameMaster.token++;
                 MainGamePageController.update_token(GameMaster.token);
